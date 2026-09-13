@@ -3,22 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f5f9ff">
+<meta name="theme-color" content="#f7fbff">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>VSign</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="VSign - Công cụ ký IPA nhanh chóng, mượt mà và dễ sử dụng.">
+
+<title>VSign — iOS Signing Tool</title>
 
 <style>
 :root{
     --blue:#0a84ff;
-    --blue-dark:#0075ed;
-    --text:#263247;
-    --muted:#8290a4;
+    --blue-2:#147ef5;
+    --blue-dark:#006fe6;
+    --text:#182235;
+    --text-2:#344158;
+    --muted:#7d8ba0;
     --muted-2:#9ba7b7;
-    --border:#dce6f0;
-    --soft:#f5f8fb;
-    --success:#20b85b;
-    --success-dark:#17a84f;
-    --shadow:0 20px 55px rgba(40,75,112,.09);
+    --line:#dfe8f1;
+    --soft:#f4f8fc;
+    --white:#fff;
+    --green:#20b85b;
+    --green-2:#18aa51;
+    --shadow:0 24px 70px rgba(35,72,111,.10);
+    --shadow-soft:0 12px 35px rgba(35,72,111,.07);
+    --radius:28px;
 }
 
 *{
@@ -26,28 +34,23 @@
     -webkit-tap-highlight-color:transparent;
 }
 
-html,
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     margin:0;
     min-height:100%;
-    background:#f7fbff;
-}
-
-body{
     color:var(--text);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Text",
-        "SF Pro Display",
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    background:
+        radial-gradient(circle at 12% 0%,rgba(10,132,255,.055),transparent 27%),
+        radial-gradient(circle at 90% 8%,rgba(77,173,255,.045),transparent 25%),
+        #f7fbff;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
 }
 
-button,
-input{
+button,input{
     font:inherit;
 }
 
@@ -55,75 +58,309 @@ button{
     border:0;
 }
 
-.page{
-    width:100%;
-    max-width:680px;
-    min-height:100dvh;
-    margin:0 auto;
-    padding:
-        max(30px,env(safe-area-inset-top))
-        16px
-        max(28px,env(safe-area-inset-bottom));
+a{
+    color:inherit;
 }
 
-.hero{
-    text-align:center;
-    margin:0 auto 22px;
+.container{
+    width:min(1120px,calc(100% - 32px));
+    margin:0 auto;
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.site-header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    border-bottom:1px solid rgba(220,231,241,.72);
+    background:rgba(247,251,255,.78);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+}
+
+.header-inner{
+    min-height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand-link{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    text-decoration:none;
+}
+
+.header-logo{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    object-fit:cover;
+    box-shadow:0 7px 18px rgba(10,132,255,.14);
+}
+
+.header-logo-fallback{
+    display:none;
+    width:40px;
+    height:40px;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    color:#fff;
+    font-size:14px;
+    font-weight:850;
+    background:linear-gradient(145deg,#48c8ff,#086cff);
+}
+
+.header-brand{
+    font-size:18px;
+    line-height:1;
+    font-weight:850;
+    letter-spacing:-.5px;
+}
+
+.header-nav{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.header-nav a{
+    padding:9px 12px;
+    border-radius:11px;
+    color:#718096;
+    font-size:13px;
+    font-weight:750;
+    text-decoration:none;
+    transition:background .2s ease,color .2s ease;
+}
+
+.header-nav a:hover{
+    color:var(--text-2);
+    background:#fff;
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+
+.hero-section{
+    padding:66px 0 52px;
+}
+
+.hero-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.02fr) minmax(380px,.98fr);
+    align-items:center;
+    gap:66px;
+}
+
+.hero-copy{
     animation:fadeUp .65s cubic-bezier(.2,.8,.2,1) both;
 }
 
-.logo{
-    display:block;
-    width:70px;
-    height:70px;
-    margin:0 auto 12px;
-    object-fit:cover;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(10,132,255,.14);
-}
-
-.logo-fallback{
-    display:none;
-    width:70px;
-    height:70px;
-    margin:0 auto 12px;
+.eyebrow{
+    display:inline-flex;
     align-items:center;
-    justify-content:center;
-    border-radius:18px;
-    color:#fff;
-    font-size:21px;
-    font-weight:800;
-    background:linear-gradient(145deg,#39c8ff,#086cff);
+    gap:7px;
+    margin:0 0 16px;
+    padding:7px 11px;
+    border:1px solid #dceaf7;
+    border-radius:999px;
+    background:rgba(255,255,255,.78);
+    color:#4385c5;
+    font-size:11px;
+    line-height:1;
+    font-weight:850;
+    letter-spacing:.45px;
+    text-transform:uppercase;
 }
 
-.brand{
+.eyebrow-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 0 4px rgba(10,132,255,.08);
+}
+
+.hero-title{
+    max-width:650px;
     margin:0;
     color:#172033;
-    font-size:31px;
-    line-height:1.05;
+    font-size:clamp(42px,5vw,66px);
+    line-height:1.01;
+    font-weight:900;
+    letter-spacing:-3px;
+}
+
+.hero-title span{
+    color:var(--blue);
+}
+
+.hero-description{
+    max-width:570px;
+    margin:20px 0 0;
+    color:#7d8ba0;
+    font-size:16px;
+    line-height:1.65;
+}
+
+.hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:27px;
+}
+
+.hero-action{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:45px;
+    padding:0 17px;
+    border-radius:14px;
+    font-size:13px;
     font-weight:800;
-    letter-spacing:-1.2px;
+    text-decoration:none;
+    transition:transform .2s ease,box-shadow .2s ease;
 }
 
-.tagline{
-    max-width:500px;
-    margin:8px auto 0;
-    color:#8491a4;
-    font-size:15px;
-    line-height:1.45;
-    letter-spacing:-.1px;
+.hero-action.primary-action{
+    color:#fff;
+    background:linear-gradient(135deg,#168cff,#0878ed);
+    box-shadow:0 11px 25px rgba(10,132,255,.17);
 }
 
-.card{
+.hero-action.secondary-action{
+    border:1px solid #dce6ef;
+    color:#526177;
+    background:#fff;
+}
+
+.hero-action:hover{
+    transform:translateY(-1px);
+}
+
+.hero-note{
+    margin-top:18px;
+    color:#a0aaba;
+    font-size:11.5px;
+}
+
+/* App preview */
+
+.preview-wrap{
     position:relative;
-    padding:13px;
-    border:1px solid rgba(213,225,237,.95);
-    border-radius:25px;
-    background:rgba(255,255,255,.90);
+    animation:previewIn .8s .08s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.preview-glow{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:78%;
+    height:78%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:rgba(10,132,255,.10);
+    filter:blur(45px);
+    pointer-events:none;
+}
+
+.preview-card{
+    position:relative;
+    z-index:1;
+    padding:15px;
+    border:1px solid rgba(218,229,240,.9);
+    border-radius:32px;
+    background:rgba(255,255,255,.76);
     box-shadow:var(--shadow);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+}
+
+.preview-image{
+    display:block;
+    width:100%;
+    aspect-ratio:16/10;
+    object-fit:cover;
+    object-position:center;
+    border-radius:23px;
+    background:#edf4fa;
+}
+
+.preview-caption{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:13px 4px 2px;
+}
+
+.preview-caption strong{
+    color:#3d4a60;
+    font-size:12.5px;
+    font-weight:800;
+}
+
+.preview-caption span{
+    color:#a0aaba;
+    font-size:11px;
+}
+
+/* ============================================================
+   SIGNING AREA
+============================================================ */
+
+.signing-section{
+    padding:20px 0 80px;
+}
+
+.signing-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.02fr) minmax(320px,.68fr);
+    gap:28px;
+    align-items:start;
+}
+
+.page-card{
+    border:1px solid rgba(213,225,237,.95);
+    border-radius:var(--radius);
+    background:rgba(255,255,255,.90);
+    box-shadow:var(--shadow-soft);
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
+}
+
+.sign-card{
+    padding:15px;
     animation:cardIn .7s .05s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.card-heading{
+    padding:9px 7px 16px;
+}
+
+.card-heading h2{
+    margin:0;
+    color:#253148;
+    font-size:21px;
+    line-height:1.2;
+    font-weight:850;
+    letter-spacing:-.55px;
+}
+
+.card-heading p{
+    margin:6px 0 0;
+    color:#8b98aa;
+    font-size:12px;
+    line-height:1.5;
 }
 
 .tabs{
@@ -289,10 +526,6 @@ button{
     line-height:1.45;
 }
 
-/* ============================================================
-   MANUAL TAB
-============================================================ */
-
 .manual-title{
     margin:0 0 5px;
     color:#354158;
@@ -325,6 +558,10 @@ button{
     transition:transform .22s ease,background .22s ease;
 }
 
+.manual-download:hover{
+    background:#f0f7fe;
+}
+
 .manual-download:active{
     transform:scale(.99);
 }
@@ -345,15 +582,255 @@ button{
     font-weight:800;
 }
 
-.footer{
-    margin-top:16px;
-    text-align:center;
-    color:#a1adbc;
+.error-box{
+    display:none;
+    margin-top:10px;
+    padding:10px 12px;
+    border:1px solid #ffd8d5;
+    border-radius:13px;
+    background:#fff6f5;
+    color:#c54a43;
+    font-size:11.5px;
+    line-height:1.5;
+}
+
+.error-box.show{
+    display:block;
+    animation:errorIn .3s ease both;
+}
+
+/* Side information */
+
+.info-card{
+    padding:23px;
+}
+
+.info-kicker{
+    margin:0 0 7px;
+    color:#8b98aa;
+    font-size:10px;
+    line-height:1.2;
+    font-weight:850;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.info-title{
+    margin:0;
+    color:#2e3a4e;
+    font-size:20px;
+    line-height:1.25;
+    font-weight:850;
+    letter-spacing:-.5px;
+}
+
+.info-text{
+    margin:8px 0 0;
+    color:#8996a8;
+    font-size:12.5px;
+    line-height:1.6;
+}
+
+.feature-list{
+    display:grid;
+    gap:9px;
+    margin-top:18px;
+}
+
+.feature{
+    display:flex;
+    gap:11px;
+    align-items:flex-start;
+    padding:11px;
+    border:1px solid #e5edf4;
+    border-radius:15px;
+    background:#fbfdff;
+}
+
+.feature-icon{
+    flex:0 0 30px;
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    color:#0a84ff;
+    background:#edf7ff;
+}
+
+.feature-icon svg{
+    width:16px;
+    height:16px;
+}
+
+.feature strong{
+    display:block;
+    margin-top:1px;
+    color:#536177;
+    font-size:12px;
+    line-height:1.25;
+    font-weight:800;
+}
+
+.feature span{
+    display:block;
+    margin-top:3px;
+    color:#99a5b5;
     font-size:11px;
+    line-height:1.4;
+}
+
+/* ============================================================
+   FAQ / FOOTER
+============================================================ */
+
+.faq-section{
+    padding:30px 0 72px;
+}
+
+.section-heading{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.section-heading .kicker{
+    margin:0 0 7px;
+    color:#6da4d6;
+    font-size:10px;
+    line-height:1;
+    font-weight:850;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+}
+
+.section-heading h2{
+    margin:0;
+    color:#263247;
+    font-size:28px;
+    line-height:1.15;
+    font-weight:880;
+    letter-spacing:-.8px;
+}
+
+.section-heading p{
+    max-width:540px;
+    margin:8px auto 0;
+    color:#8d99a9;
+    font-size:12.5px;
+    line-height:1.55;
+}
+
+.faq-list{
+    width:min(820px,100%);
+    margin:0 auto;
+    border-top:1px solid #dfe8f1;
+}
+
+.faq-item{
+    border-bottom:1px solid #dfe8f1;
+}
+
+.faq-item summary{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:19px 2px;
+    list-style:none;
+    color:#46546a;
+    font-size:13px;
+    line-height:1.4;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.faq-item summary::-webkit-details-marker{
+    display:none;
+}
+
+.faq-chevron{
+    flex:0 0 26px;
+    width:26px;
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #dfe8f1;
+    border-radius:50%;
+    color:#8c99aa;
+    background:#fff;
+    transition:transform .3s ease,background .3s ease;
+}
+
+.faq-chevron svg{
+    width:13px;
+    height:13px;
+}
+
+.faq-item[open] .faq-chevron{
+    transform:rotate(180deg);
+    background:#f3f8fd;
+}
+
+.faq-answer{
+    padding:0 46px 20px 2px;
+    color:#8996a8;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.faq-answer strong{
+    color:#5e6c80;
+}
+
+.faq-answer ul{
+    margin:7px 0 0;
+    padding-left:18px;
+}
+
+.faq-answer li{
+    margin:3px 0;
+}
+
+.site-footer{
+    padding:30px 0 32px;
+    border-top:1px solid #dfe8f1;
+    background:rgba(255,255,255,.52);
+}
+
+.footer-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#637186;
+    font-size:12px;
+    font-weight:800;
+}
+
+.footer-brand img{
+    width:29px;
+    height:29px;
+    border-radius:9px;
+    object-fit:cover;
+}
+
+.footer-copy{
+    color:#a0aaba;
+    font-size:10.5px;
 }
 
 /* ============================================================
    SIGNING OVERLAY
+   Logic/IDs intentionally preserved.
 ============================================================ */
 
 .sign-overlay{
@@ -366,10 +843,7 @@ button{
     width:100%;
     height:100dvh;
     min-height:100dvh;
-    padding:
-        max(18px,env(safe-area-inset-top))
-        16px
-        max(18px,env(safe-area-inset-bottom));
+    padding:max(18px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));
     background:rgba(247,251,255,.965);
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
@@ -529,9 +1003,6 @@ button{
 
 /* ============================================================
    RESULT
-   Fixed viewport is intentional:
-   prevents the result card from appearing stuck at the
-   top when Safari's visual viewport changes after OTA/signing.
 ============================================================ */
 
 .result-view{
@@ -545,10 +1016,7 @@ button{
     height:100dvh;
     min-height:100dvh;
     overflow:auto;
-    padding:
-        max(20px,env(safe-area-inset-top))
-        16px
-        max(20px,env(safe-area-inset-bottom));
+    padding:max(20px,env(safe-area-inset-top)) 16px max(20px,env(safe-area-inset-bottom));
     background:
         radial-gradient(circle at 50% 18%,rgba(32,184,91,.08),transparent 34%),
         linear-gradient(180deg,#f8fcff,#fff);
@@ -689,37 +1157,21 @@ button{
 }
 
 /* ============================================================
-   ERROR
-============================================================ */
-
-.error-box{
-    display:none;
-    margin-top:10px;
-    padding:10px 12px;
-    border:1px solid #ffd8d5;
-    border-radius:13px;
-    background:#fff6f5;
-    color:#c54a43;
-    font-size:11.5px;
-    line-height:1.5;
-}
-
-.error-box.show{
-    display:block;
-    animation:errorIn .3s ease both;
-}
-
-/* ============================================================
    ANIMATIONS
 ============================================================ */
 
 @keyframes fadeUp{
-    from{opacity:0;transform:translateY(10px)}
+    from{opacity:0;transform:translateY(12px)}
     to{opacity:1;transform:none}
 }
 
 @keyframes cardIn{
     from{opacity:0;transform:translateY(13px) scale(.99)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes previewIn{
+    from{opacity:0;transform:translateY(18px) scale(.985)}
     to{opacity:1;transform:none}
 }
 
@@ -753,37 +1205,113 @@ button{
     to{opacity:1;transform:none}
 }
 
-@media(max-width:600px){
-    .page{
-        padding-left:13px;
-        padding-right:13px;
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media(max-width:900px){
+    .hero-grid{
+        grid-template-columns:1fr;
+        gap:36px;
     }
 
-    .hero{
-        margin-bottom:18px;
+    .hero-copy{
+        text-align:center;
     }
 
-    .logo,
-    .logo-fallback{
-        width:64px;
-        height:64px;
-        margin-bottom:10px;
-        border-radius:17px;
+    .hero-title,
+    .hero-description{
+        margin-left:auto;
+        margin-right:auto;
     }
 
-    .brand{
-        font-size:29px;
+    .hero-actions{
+        justify-content:center;
     }
 
-    .tagline{
-        max-width:390px;
+    .hero-note{
+        text-align:center;
+    }
+
+    .preview-wrap{
+        width:min(650px,100%);
+        margin:0 auto;
+    }
+
+    .signing-grid{
+        grid-template-columns:1fr;
+    }
+
+    .info-card{
+        max-width:720px;
+        margin:0 auto;
+    }
+}
+
+@media(max-width:640px){
+    .container{
+        width:min(100% - 26px,1120px);
+    }
+
+    .header-inner{
+        min-height:62px;
+    }
+
+    .header-nav a{
+        padding:8px 7px;
+        font-size:11px;
+    }
+
+    .header-nav a:nth-child(2){
+        display:none;
+    }
+
+    .hero-section{
+        padding:43px 0 35px;
+    }
+
+    .hero-title{
+        font-size:42px;
+        letter-spacing:-2px;
+    }
+
+    .hero-description{
         font-size:14px;
-        line-height:1.4;
     }
 
-    .card{
+    .hero-actions{
+        margin-top:22px;
+    }
+
+    .hero-action{
+        min-height:43px;
+        padding:0 14px;
+    }
+
+    .preview-card{
+        padding:10px;
+        border-radius:25px;
+    }
+
+    .preview-image{
+        border-radius:18px;
+    }
+
+    .preview-caption{
+        padding-top:10px;
+    }
+
+    .signing-section{
+        padding-bottom:56px;
+    }
+
+    .sign-card{
         padding:11px;
         border-radius:23px;
+    }
+
+    .card-heading{
+        padding:7px 5px 13px;
     }
 
     .tabs{
@@ -813,9 +1341,32 @@ button{
         font-size:14px;
     }
 
-    .result-card{
-        padding:23px 16px 19px;
+    .info-card{
+        padding:19px;
         border-radius:23px;
+    }
+
+    .faq-section{
+        padding:10px 0 52px;
+    }
+
+    .section-heading h2{
+        font-size:25px;
+    }
+
+    .faq-item summary{
+        padding:17px 0;
+        font-size:12.5px;
+    }
+
+    .faq-answer{
+        padding-right:34px;
+        font-size:11.5px;
+    }
+
+    .footer-inner{
+        align-items:flex-start;
+        flex-direction:column;
     }
 }
 
@@ -863,218 +1414,406 @@ button{
 
 <body>
 
-<main id="homeView" class="page">
-
-    <header class="hero">
-
-        <img
-            class="logo"
-            src="https://ioscert.io.vn/img/vsign.webp"
-            alt="VSign"
-            onerror="
-                this.style.display='none';
-                document.getElementById('logoFallback').style.display='flex';
-            "
-        >
-
-        <div id="logoFallback" class="logo-fallback">VS</div>
-
-        <h1 class="brand">VSign</h1>
-
-        <p class="tagline">
-            Công cụ ký iPA nhanh, chóng mượt mà dễ dàng sử dụng!
-        </p>
-
-    </header>
-
-
-    <section class="card">
-
-        <div id="tabs" class="tabs">
-
-            <div class="tab-slider"></div>
-
-            <button
-                id="autoTab"
-                class="tab active"
-                type="button"
-                onclick="switchTab('auto')"
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand-link" href="#home">
+            <img
+                class="header-logo"
+                src="https://ioscert.io.vn/img/vsign.webp"
+                alt="VSign"
+                onerror="
+                    this.style.display='none';
+                    document.getElementById('headerLogoFallback').style.display='flex';
+                "
             >
-                Cài đặt tự động
-            </button>
+            <div id="headerLogoFallback" class="header-logo-fallback">VS</div>
+            <span class="header-brand">VSign</span>
+        </a>
 
-            <button
-                id="manualTab"
-                class="tab"
-                type="button"
-                onclick="switchTab('manual')"
-            >
-                Cài thủ công IPA
-            </button>
+        <nav class="header-nav" aria-label="Điều hướng">
+            <a href="#signing">Ký ứng dụng</a>
+            <a href="#preview">Xem trước</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+    </div>
+</header>
+
+<main id="homeView">
+
+    <section id="home" class="hero-section">
+        <div class="container hero-grid">
+
+            <div class="hero-copy">
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    iOS Signing Tool
+                </div>
+
+                <h1 class="hero-title">
+                    Ký IPA.<br>
+                    <span>Cài đặt dễ dàng.</span>
+                </h1>
+
+                <p class="hero-description">
+                    VSign giúp bạn ký và cài đặt ứng dụng iOS nhanh chóng
+                    bằng UDID đã đăng ký. Giao diện đơn giản, thao tác gọn
+                    và tối ưu cho iPhone.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="hero-action primary-action" href="#signing">
+                        Bắt đầu ký ứng dụng
+                    </a>
+                    <a class="hero-action secondary-action" href="#faq">
+                        Xem hướng dẫn
+                    </a>
+                </div>
+
+                <div class="hero-note">
+                    Nhanh chóng · Gọn gàng · Dễ sử dụng
+                </div>
+            </div>
+
+            <div id="preview" class="preview-wrap">
+                <div class="preview-glow"></div>
+
+                <div class="preview-card">
+                    <img
+                        class="preview-image"
+                        src="https://agency.chungchip12.com/img/vsign-preview.webp"
+                        alt="Giao diện ứng dụng VSign"
+                        loading="eager"
+                    >
+
+                    <div class="preview-caption">
+                        <strong>Trải nghiệm VSign trên iPhone/iPad</strong>
+                        <span>App Preview</span>
+                    </div>
+                </div>
+            </div>
 
         </div>
-
-
-        <!-- =====================================================
-             AUTO
-        ====================================================== -->
-
-        <section id="autoPanel" class="panel active">
-
-            <label class="field-title" for="udid">
-                UDID thiết bị
-            </label>
-
-            <p class="notice">
-                Vui lòng nhập UDID thiết bị của bạn đã mua chứng chỉ
-                tại hệ thống <strong>CHUNGCHIP12.COM</strong>
-                để lấy thông tin và cài đặt ứng dụng!
-            </p>
-
-            <div class="input-wrap">
-
-                <input
-                    id="udid"
-                    class="udid"
-                    type="text"
-                    inputmode="text"
-                    autocomplete="off"
-                    autocapitalize="characters"
-                    spellcheck="false"
-                    maxlength="40"
-                    placeholder="Nhập UDID thiết bị của bạn"
-                >
-
-            </div>
-
-            <button
-                id="signButton"
-                class="primary"
-                type="button"
-                onclick="startSigning()"
-            >
-                Ký ứng dụng
-            </button>
-
-            <p class="helper">
-                Vui lòng kiểm tra chính xác UDID trước khi ký.
-            </p>
-
-            <div id="errorBox" class="error-box"></div>
-
-        </section>
-
-
-        <!-- =====================================================
-             MANUAL
-        ====================================================== -->
-
-        <section id="manualPanel" class="panel">
-
-            <h2 class="manual-title">
-                Cài thủ công IPA
-            </h2>
-
-            <p class="manual-text">
-                Tải file IPA về thiết bị của bạn để tự ký và cài đặt thủ công.
-            </p>
-
-            <a
-                class="manual-download"
-                href="https://agency.chungchip12.com/install/VSign_v1.0_Release.ipa"
-                target="_blank"
-                rel="noopener"
-            >
-                Tải xuống file IPA
-            </a>
-
-            <div class="manual-note">
-                <strong>Hướng dẫn sử dụng:</strong>
-                Khi tải xong IPA, bạn hãy sử dụng các công cụ như
-                <strong>ESign</strong>, <strong>Gbox</strong>,
-                <strong>Scarlet</strong>, ... để ký và cài đặt
-                ứng dụng lên thiết bị.
-            </div>
-
-        </section>
-
     </section>
 
+    <section id="signing" class="signing-section">
+        <div class="container signing-grid">
 
-    <footer class="footer">
-        VSign · iOS Signing Tool
-    </footer>
+            <section class="page-card sign-card">
+                <div class="card-heading">
+                    <h2>Ký ứng dụng VSign</h2>
+                    <p>Chọn phương thức cài đặt phù hợp với thiết bị của bạn.</p>
+                </div>
+
+                <div id="tabs" class="tabs">
+                    <div class="tab-slider"></div>
+
+                    <button
+                        id="autoTab"
+                        class="tab active"
+                        type="button"
+                        onclick="switchTab('auto')"
+                    >
+                        Cài đặt tự động
+                    </button>
+
+                    <button
+                        id="manualTab"
+                        class="tab"
+                        type="button"
+                        onclick="switchTab('manual')"
+                    >
+                        Cài thủ công IPA
+                    </button>
+                </div>
+
+                <section id="autoPanel" class="panel active">
+                    <label class="field-title" for="udid">
+                        UDID thiết bị
+                    </label>
+
+                    <p class="notice">
+                        Vui lòng nhập UDID thiết bị của bạn đã mua chứng chỉ
+                        tại hệ thống <strong>CHUNGCHIP12.COM</strong>
+                        để lấy thông tin và cài đặt ứng dụng!
+                    </p>
+
+                    <div class="input-wrap">
+                        <input
+                            id="udid"
+                            class="udid"
+                            type="text"
+                            inputmode="text"
+                            autocomplete="off"
+                            autocapitalize="characters"
+                            spellcheck="false"
+                            maxlength="40"
+                            placeholder="Nhập UDID thiết bị của bạn"
+                        >
+                    </div>
+
+                    <button
+                        id="signButton"
+                        class="primary"
+                        type="button"
+                        onclick="startSigning()"
+                    >
+                        Ký ứng dụng
+                    </button>
+
+                    <p class="helper">
+                        Vui lòng kiểm tra chính xác UDID trước khi ký.
+                    </p>
+
+                    <div id="errorBox" class="error-box"></div>
+                </section>
+
+                <section id="manualPanel" class="panel">
+                    <h2 class="manual-title">Cài thủ công IPA</h2>
+
+                    <p class="manual-text">
+                        Tải file IPA về thiết bị của bạn để tự ký và cài đặt thủ công.
+                    </p>
+
+                    <a
+                        class="manual-download"
+                        href="https://agency.chungchip12.com/install/VSign_v1.0_Release.ipa"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Tải xuống file IPA
+                    </a>
+
+                    <div class="manual-note">
+                        <strong>Hướng dẫn sử dụng:</strong>
+                        Khi tải xong IPA, bạn hãy sử dụng các công cụ như
+                        <strong>ESign</strong>, <strong>Gbox</strong>,
+                        <strong>Scarlet</strong>, ... để ký và cài đặt
+                        ứng dụng lên thiết bị.
+                    </div>
+                </section>
+            </section>
+
+            <aside class="page-card info-card">
+                <p class="info-kicker">VSign experience</p>
+                <h2 class="info-title">Một cách đơn giản hơn để cài ứng dụng.</h2>
+                <p class="info-text">
+                    VSign tập trung vào những thao tác cần thiết để quá trình
+                    ký và cài đặt trở nên trực quan, nhẹ nhàng và dễ hiểu.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v12"></path>
+                                <path d="m7 10 5 5 5-5"></path>
+                                <path d="M5 21h14"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Ký nhanh</strong>
+                            <span>Nhập UDID và bắt đầu quá trình ký.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+                                <path d="M12 18h.01"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tối ưu cho iPhone</strong>
+                            <span>Giao diện responsive, thao tác thuận tiện trên màn hình nhỏ.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v18"></path>
+                                <path d="M3 12h18"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Hai cách cài đặt</strong>
+                            <span>Cài tự động hoặc tải IPA để ký thủ công.</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="kicker">FAQ</p>
+                <h2>Câu hỏi thường gặp</h2>
+                <p>
+                    Một vài thông tin giúp bạn sử dụng VSign nhanh hơn.
+                    Bấm vào từng câu hỏi để xem câu trả lời.
+                </p>
+            </div>
+
+            <div class="faq-list">
+
+                <details class="faq-item">
+                    <summary>
+                        Tôi có thể cài đặt VSign như thế nào?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Để cài đặt VSign, bạn có thể sử dụng <strong>2 cách</strong>:
+                        <ul>
+                            <li><strong>Cài đặt trực tiếp:</strong> Khi bạn có đơn hàng tại CHỨNG CHỈ P12, hãy nhập UDID vào VSign rồi bấm <strong>Ký ứng dụng</strong>.</li>
+                            <li><strong>Cài đặt thủ công bằng IPA:</strong> Tải file IPA VSign về và sử dụng các ứng dụng bên thứ 3 như ESign, Gbox, Scarlet... để ký và cài đặt.</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Có giới hạn kích thước IPA không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        <strong>VSign hỗ trợ ký ứng dụng không giới hạn dung lượng!</strong>
+                        Thời gian xử lý thực tế có thể phụ thuộc vào kích thước ứng dụng và tốc độ kết nối.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        UDID là gì và lấy UDID ở đâu?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        UDID là mã nhận diện riêng của thiết bị iPhone/iPad. Bạn cần lấy đúng UDID của thiết bị đã đăng ký chứng chỉ trước khi thực hiện ký ứng dụng.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Vì sao tôi nhập đúng UDID nhưng không thể ký?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Hãy kiểm tra lại UDID và trạng thái đơn hàng/chứng chỉ của bạn. Thiết bị cần có đơn hàng hợp lệ và chứng chỉ tương ứng trước khi VSign có thể thực hiện ký.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Sau khi ký xong, tôi cài ứng dụng ở đâu?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Khi quá trình ký hoàn tất, VSign sẽ hiển thị nút <strong>Cài đặt ngay</strong>. Bạn chỉ cần bấm nút này để tiếp tục quá trình cài đặt ứng dụng trên thiết bị.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Tôi có thể ký lại cho thiết bị khác không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Có. Sau khi hoàn tất một lượt ký, bạn có thể chọn <strong>“Ký thiết bị khác”</strong> để quay lại màn hình chính và nhập UDID mới.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        File IPA ký xong có được lưu vĩnh viễn không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        File ký được tạo để phục vụ quá trình cài đặt. Thời gian tồn tại của file phụ thuộc vào hệ thống VSign và phiên ký hiện tại.
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </section>
 
 </main>
 
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <img src="https://ioscert.io.vn/img/vsign.webp" alt="VSign">
+            <span>VSign · iOS Signing Tool</span>
+        </div>
+        <div class="footer-copy">
+            © 2026 VSign. All rights reserved.
+        </div>
+    </div>
+</footer>
 
 <!-- ============================================================
      SIGNING OVERLAY
-============================================================= -->
+     IDs and structure preserved for existing signing logic.
+============================================================ -->
 
-<div
-    id="signOverlay"
-    class="sign-overlay"
-    aria-hidden="true"
->
-
+<div id="signOverlay" class="sign-overlay" aria-hidden="true">
     <div class="sign-modal">
 
         <div class="progress-ring">
-
             <svg viewBox="0 0 142 142">
-
                 <defs>
-                    <linearGradient
-                        id="ringGradient"
-                        x1="0%"
-                        y1="0%"
-                        x2="100%"
-                        y2="100%"
-                    >
+                    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stop-color="#48b5ff"/>
                         <stop offset="50%" stop-color="#0a84ff"/>
                         <stop offset="100%" stop-color="#006de8"/>
                     </linearGradient>
                 </defs>
 
-                <circle
-                    class="ring-bg"
-                    cx="71"
-                    cy="71"
-                    r="60"
-                ></circle>
-
-                <circle
-                    id="ringValue"
-                    class="ring-value"
-                    cx="71"
-                    cy="71"
-                    r="60"
-                ></circle>
-
+                <circle class="ring-bg" cx="71" cy="71" r="60"></circle>
+                <circle id="ringValue" class="ring-value" cx="71" cy="71" r="60"></circle>
             </svg>
 
             <div class="progress-center">
-
                 <div id="percent" class="percent">0%</div>
-
             </div>
-
         </div>
 
+        <h2 id="signTitle" class="sign-title">Kiểm tra UDID</h2>
 
-        <h2 id="signTitle" class="sign-title">
-            Kiểm tra UDID
-        </h2>
-
-        <p id="signSub" class="sign-sub">
-            Đang chuẩn bị...
-        </p>
-
+        <p id="signSub" class="sign-sub">Đang chuẩn bị...</p>
 
         <div class="steps">
-
             <div id="step0" class="step active">
                 <div class="step-dot">1</div>
                 <div class="step-text">Kiểm tra UDID</div>
@@ -1104,40 +1843,25 @@ button{
                 <div class="step-dot">✓</div>
                 <div class="step-text">Hoàn tất</div>
             </div>
-
         </div>
 
     </div>
-
 </div>
-
 
 <!-- ============================================================
      RESULT
-============================================================= -->
+============================================================ -->
 
 <section id="resultView" class="result-view">
-
     <div class="result-card">
 
         <div class="success-circle">
-
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m5 12 4.2 4.2L19 6.5"></path>
             </svg>
-
         </div>
 
-        <h2 class="result-title">
-            Ứng dụng đã sẵn sàng
-        </h2>
+        <h2 class="result-title">Ứng dụng đã sẵn sàng</h2>
 
         <p class="result-description">
             Hãy bấm nút <strong>"Cài đặt ngay"</strong>
@@ -1145,20 +1869,11 @@ button{
         </p>
 
         <div class="device-box">
-
-            <div class="device-label">
-                THIẾT BỊ
-            </div>
-
+            <div class="device-label">THIẾT BỊ</div>
             <div id="resultUdid" class="device-value"></div>
-
         </div>
 
-        <button
-            id="installButton"
-            class="install"
-            type="button"
-        >
+        <button id="installButton" class="install" type="button">
             Cài đặt ngay
         </button>
 
@@ -1176,11 +1891,10 @@ button{
         </a>
 
     </div>
-
 </section>
 
-
 <script>
+
 "use strict";
 
 const state = {
@@ -1738,6 +2452,7 @@ function resetApp(){
 
 setProgress(0);
 setStep(0);
+
 </script>
 
 </body>
