@@ -17,4 +17,11 @@ Bên cạnh các tính năng ký IPA, **VSign** còn tích hợp **kho ứng d�
 
 ## 🙏 Lời cảm ơn
 
-VSign được phát triển với cảm hứng từ nền tảng **Feather**. Đội ngũ V
+VSign được phát triển với cảm hứng từ nền tảng **Feather**. Đội ngũ VSign trân trọng ghi nhận những đóng góp của tác giả Feather đối với cộng đồng và xin gửi lời cảm ơn chân thành đến dự án đã tạo nền tảng cảm hứng cho VSign.
+
+---
+
+**VSign** — Đơn giản hơn. Tiện lợi hơn. Trọn vẹn hơn. 
+
+**🔏vsign.download**
+Made with ❤️ for iOS community
