@@ -1,0 +1,1744 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f9ff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>VSign</title>
+
+<style>
+:root{
+    --blue:#0a84ff;
+    --blue-dark:#0075ed;
+    --text:#263247;
+    --muted:#8290a4;
+    --muted-2:#9ba7b7;
+    --border:#dce6f0;
+    --soft:#f5f8fb;
+    --success:#20b85b;
+    --success-dark:#17a84f;
+    --shadow:0 20px 55px rgba(40,75,112,.09);
+}
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    margin:0;
+    min-height:100%;
+    background:#f7fbff;
+}
+
+body{
+    color:var(--text);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        "SF Pro Display",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    border:0;
+}
+
+.page{
+    width:100%;
+    max-width:680px;
+    min-height:100dvh;
+    margin:0 auto;
+    padding:
+        max(30px,env(safe-area-inset-top))
+        16px
+        max(28px,env(safe-area-inset-bottom));
+}
+
+.hero{
+    text-align:center;
+    margin:0 auto 22px;
+    animation:fadeUp .65s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.logo{
+    display:block;
+    width:70px;
+    height:70px;
+    margin:0 auto 12px;
+    object-fit:cover;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(10,132,255,.14);
+}
+
+.logo-fallback{
+    display:none;
+    width:70px;
+    height:70px;
+    margin:0 auto 12px;
+    align-items:center;
+    justify-content:center;
+    border-radius:18px;
+    color:#fff;
+    font-size:21px;
+    font-weight:800;
+    background:linear-gradient(145deg,#39c8ff,#086cff);
+}
+
+.brand{
+    margin:0;
+    color:#172033;
+    font-size:31px;
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-1.2px;
+}
+
+.tagline{
+    max-width:500px;
+    margin:8px auto 0;
+    color:#8491a4;
+    font-size:15px;
+    line-height:1.45;
+    letter-spacing:-.1px;
+}
+
+.card{
+    position:relative;
+    padding:13px;
+    border:1px solid rgba(213,225,237,.95);
+    border-radius:25px;
+    background:rgba(255,255,255,.90);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    animation:cardIn .7s .05s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.tabs{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3px;
+    padding:4px;
+    margin-bottom:24px;
+    border:1px solid #e1e9f1;
+    border-radius:19px;
+    background:#edf3f8;
+}
+
+.tab-slider{
+    position:absolute;
+    z-index:1;
+    top:4px;
+    bottom:4px;
+    left:4px;
+    width:calc(50% - 5.5px);
+    border-radius:15px;
+    background:#fff;
+    box-shadow:0 4px 13px rgba(43,72,105,.09);
+    transition:transform .45s cubic-bezier(.22,1,.36,1);
+}
+
+.tabs.manual .tab-slider{
+    transform:translateX(calc(100% + 3px));
+}
+
+.tab{
+    position:relative;
+    z-index:2;
+    min-height:47px;
+    padding:8px 9px;
+    border-radius:15px;
+    background:transparent;
+    color:#8794a7;
+    font-size:14px;
+    line-height:1.2;
+    font-weight:750;
+    letter-spacing:-.15px;
+    cursor:pointer;
+    transition:color .3s ease,transform .25s ease;
+}
+
+.tab.active{
+    color:#344055;
+}
+
+.tab:active{
+    transform:scale(.985);
+}
+
+.panel{
+    display:none;
+    animation:panelIn .35s ease both;
+}
+
+.panel.active{
+    display:block;
+}
+
+.field-title{
+    display:block;
+    margin:0 0 6px;
+    color:#354158;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:-.2px;
+}
+
+.notice{
+    margin:0 0 13px;
+    color:#8996a8;
+    font-size:12.5px;
+    line-height:1.55;
+    letter-spacing:-.05px;
+}
+
+.notice strong{
+    color:#69788d;
+    font-weight:800;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.udid{
+    width:100%;
+    min-height:55px;
+    padding:0 15px;
+    border:1.4px solid #d8e2ec;
+    border-radius:17px;
+    outline:none;
+    background:#fff;
+    color:#263247;
+    font-size:15px;
+    letter-spacing:.1px;
+    transition:border-color .25s ease,box-shadow .25s ease;
+}
+
+.udid::placeholder{
+    color:#a4afbd;
+}
+
+.udid:focus{
+    border-color:#68a8f6;
+    box-shadow:0 0 0 4px rgba(10,132,255,.08);
+}
+
+.primary{
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    min-height:55px;
+    margin-top:11px;
+    border-radius:17px;
+    background:linear-gradient(135deg,#168cff,#0878ed);
+    color:#fff;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 11px 24px rgba(10,132,255,.18);
+    transition:transform .22s ease,box-shadow .22s ease,opacity .22s ease;
+}
+
+.primary::after{
+    content:"";
+    position:absolute;
+    top:-100%;
+    left:-35%;
+    width:24%;
+    height:300%;
+    transform:rotate(24deg);
+    background:rgba(255,255,255,.17);
+    filter:blur(4px);
+    animation:shine 4.5s 1s infinite;
+}
+
+.primary:hover{
+    transform:translateY(-1px);
+    box-shadow:0 14px 27px rgba(10,132,255,.22);
+}
+
+.primary:active{
+    transform:scale(.988);
+}
+
+.primary:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.helper{
+    margin:9px 2px 0;
+    text-align:center;
+    color:#a0aabb;
+    font-size:11.5px;
+    line-height:1.45;
+}
+
+/* ============================================================
+   MANUAL TAB
+============================================================ */
+
+.manual-title{
+    margin:0 0 5px;
+    color:#354158;
+    font-size:18px;
+    line-height:1.25;
+    font-weight:800;
+    letter-spacing:-.4px;
+}
+
+.manual-text{
+    margin:0 0 13px;
+    color:#8b98aa;
+    font-size:12.5px;
+    line-height:1.5;
+}
+
+.manual-download{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:52px;
+    border:1px solid #d9e5f0;
+    border-radius:16px;
+    background:#f7fbff;
+    color:#0877eb;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+    transition:transform .22s ease,background .22s ease;
+}
+
+.manual-download:active{
+    transform:scale(.99);
+}
+
+.manual-note{
+    margin:11px 0 0;
+    padding:11px 13px;
+    border:1px solid #e2eaf2;
+    border-radius:14px;
+    background:#f7f9fc;
+    color:#8b97a8;
+    font-size:11.5px;
+    line-height:1.55;
+}
+
+.manual-note strong{
+    color:#6e7c90;
+    font-weight:800;
+}
+
+.footer{
+    margin-top:16px;
+    text-align:center;
+    color:#a1adbc;
+    font-size:11px;
+}
+
+/* ============================================================
+   SIGNING OVERLAY
+============================================================ */
+
+.sign-overlay{
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+    padding:
+        max(18px,env(safe-area-inset-top))
+        16px
+        max(18px,env(safe-area-inset-bottom));
+    background:rgba(247,251,255,.965);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .35s ease,visibility .35s ease;
+}
+
+.sign-overlay.show{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.sign-modal{
+    width:min(470px,100%);
+    padding:25px 18px 19px;
+    text-align:center;
+    border:1px solid #dce7f1;
+    border-radius:25px;
+    background:rgba(255,255,255,.94);
+    box-shadow:0 25px 70px rgba(31,70,111,.12);
+    transform:translateY(10px) scale(.98);
+    transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+
+.sign-overlay.show .sign-modal{
+    transform:none;
+}
+
+.progress-ring{
+    position:relative;
+    width:108px;
+    height:108px;
+    margin:0 auto 16px;
+}
+
+.progress-ring svg{
+    width:100%;
+    height:100%;
+    transform:rotate(-90deg);
+}
+
+.ring-bg{
+    fill:none;
+    stroke:#e9eff5;
+    stroke-width:8;
+}
+
+.ring-value{
+    fill:none;
+    stroke:url(#ringGradient);
+    stroke-width:8;
+    stroke-linecap:round;
+    stroke-dasharray:376.99;
+    stroke-dashoffset:376.99;
+}
+
+.progress-center{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.percent{
+    color:#263247;
+    font-size:26px;
+    line-height:1;
+    font-weight:850;
+    letter-spacing:-1px;
+}
+
+.percent-symbol{
+    display:none;
+}
+
+.sign-title{
+    margin:0;
+    color:#2e3a4e;
+    font-size:19px;
+    line-height:1.25;
+    font-weight:820;
+    letter-spacing:-.45px;
+}
+
+.sign-sub{
+    min-height:20px;
+    margin:5px auto 17px;
+    color:#8b98aa;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.steps{
+    display:grid;
+    gap:6px;
+    text-align:left;
+}
+
+.step{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 9px;
+    border-radius:12px;
+    color:#a0aaba;
+    background:#f8fafc;
+    transition:color .3s ease,background .3s ease,transform .3s ease;
+}
+
+.step-dot{
+    flex:0 0 23px;
+    width:23px;
+    height:23px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#e9eff5;
+    color:#9ca8b7;
+    font-size:10px;
+    font-weight:850;
+    transition:all .3s ease;
+}
+
+.step-text{
+    font-size:12px;
+    line-height:1.2;
+    font-weight:700;
+}
+
+.step.active{
+    color:#1678df;
+    background:#eef7ff;
+    transform:translateX(1px);
+}
+
+.step.active .step-dot{
+    color:#fff;
+    background:#0a84ff;
+    box-shadow:0 5px 12px rgba(10,132,255,.18);
+}
+
+.step.done{
+    color:#198a4e;
+    background:#f0faf4;
+}
+
+.step.done .step-dot{
+    color:#fff;
+    background:#20b85b;
+}
+
+/* ============================================================
+   RESULT
+   Fixed viewport is intentional:
+   prevents the result card from appearing stuck at the
+   top when Safari's visual viewport changes after OTA/signing.
+============================================================ */
+
+.result-view{
+    position:fixed;
+    z-index:900;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100dvh;
+    min-height:100dvh;
+    overflow:auto;
+    padding:
+        max(20px,env(safe-area-inset-top))
+        16px
+        max(20px,env(safe-area-inset-bottom));
+    background:
+        radial-gradient(circle at 50% 18%,rgba(32,184,91,.08),transparent 34%),
+        linear-gradient(180deg,#f8fcff,#fff);
+}
+
+.result-view.show{
+    display:flex;
+    animation:resultFade .45s ease both;
+}
+
+.result-card{
+    width:min(570px,100%);
+    max-height:calc(100dvh - 40px);
+    overflow:auto;
+    padding:26px 20px 21px;
+    text-align:center;
+    border:1px solid #dce9e1;
+    border-radius:25px;
+    background:rgba(255,255,255,.96);
+    box-shadow:0 25px 70px rgba(36,86,61,.10);
+    animation:resultCardIn .55s cubic-bezier(.22,1,.36,1) both;
+}
+
+.success-circle{
+    width:62px;
+    height:62px;
+    margin:0 auto 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#def8e8;
+    color:#20b85b;
+    animation:successPop .55s cubic-bezier(.22,1,.36,1) both;
+}
+
+.success-circle svg{
+    width:30px;
+    height:30px;
+}
+
+.result-title{
+    margin:0;
+    color:#2d394d;
+    font-size:21px;
+    line-height:1.25;
+    font-weight:850;
+    letter-spacing:-.55px;
+}
+
+.result-description{
+    max-width:430px;
+    margin:6px auto 16px;
+    color:#8b98aa;
+    font-size:12.5px;
+    line-height:1.5;
+}
+
+.result-description strong{
+    color:#65748a;
+}
+
+.device-box{
+    width:100%;
+    margin-bottom:10px;
+    padding:12px 14px;
+    text-align:left;
+    border:1px solid #dfe8ef;
+    border-radius:15px;
+    background:#f8fafc;
+}
+
+.device-label{
+    margin-bottom:4px;
+    color:#9aa6b5;
+    font-size:10px;
+    line-height:1.2;
+    font-weight:850;
+    letter-spacing:.7px;
+}
+
+.device-value{
+    color:#4c596d;
+    font-size:12.5px;
+    line-height:1.4;
+    font-weight:750;
+    word-break:break-all;
+}
+
+.install{
+    width:100%;
+    min-height:55px;
+    border-radius:17px;
+    background:linear-gradient(135deg,#24c965,#18ae52);
+    color:#fff;
+    font-size:15px;
+    font-weight:850;
+    cursor:pointer;
+    box-shadow:0 12px 25px rgba(32,184,91,.18);
+    transition:transform .22s ease,opacity .22s ease;
+}
+
+.install:active{
+    transform:scale(.988);
+}
+
+.install.expired{
+    background:#dfe5ea;
+    color:#8994a2;
+    box-shadow:none;
+    cursor:not-allowed;
+}
+
+.expiry{
+    margin:9px 0 0;
+    color:#a0aaba;
+    font-size:11px;
+    line-height:1.4;
+}
+
+.expiry strong{
+    color:#758295;
+    font-variant-numeric:tabular-nums;
+}
+
+.back{
+    display:inline-block;
+    margin-top:15px;
+    color:#8591a2;
+    font-size:12px;
+    line-height:1.3;
+    font-weight:750;
+    text-decoration:none;
+}
+
+.back:active{
+    opacity:.65;
+}
+
+/* ============================================================
+   ERROR
+============================================================ */
+
+.error-box{
+    display:none;
+    margin-top:10px;
+    padding:10px 12px;
+    border:1px solid #ffd8d5;
+    border-radius:13px;
+    background:#fff6f5;
+    color:#c54a43;
+    font-size:11.5px;
+    line-height:1.5;
+}
+
+.error-box.show{
+    display:block;
+    animation:errorIn .3s ease both;
+}
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(13px) scale(.99)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes panelIn{
+    from{opacity:0;transform:translateY(5px)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes resultFade{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes resultCardIn{
+    from{opacity:0;transform:translateY(10px) scale(.985)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes successPop{
+    from{opacity:0;transform:scale(.6)}
+    to{opacity:1;transform:scale(1)}
+}
+
+@keyframes shine{
+    0%,55%{left:-40%}
+    75%,100%{left:120%}
+}
+
+@keyframes errorIn{
+    from{opacity:0;transform:translateY(-3px)}
+    to{opacity:1;transform:none}
+}
+
+@media(max-width:600px){
+    .page{
+        padding-left:13px;
+        padding-right:13px;
+    }
+
+    .hero{
+        margin-bottom:18px;
+    }
+
+    .logo,
+    .logo-fallback{
+        width:64px;
+        height:64px;
+        margin-bottom:10px;
+        border-radius:17px;
+    }
+
+    .brand{
+        font-size:29px;
+    }
+
+    .tagline{
+        max-width:390px;
+        font-size:14px;
+        line-height:1.4;
+    }
+
+    .card{
+        padding:11px;
+        border-radius:23px;
+    }
+
+    .tabs{
+        margin-bottom:21px;
+        border-radius:17px;
+    }
+
+    .tab{
+        min-height:44px;
+        font-size:13px;
+        border-radius:13px;
+    }
+
+    .tab-slider{
+        border-radius:13px;
+    }
+
+    .udid{
+        min-height:52px;
+        border-radius:15px;
+        font-size:14px;
+    }
+
+    .primary{
+        min-height:53px;
+        border-radius:15px;
+        font-size:14px;
+    }
+
+    .result-card{
+        padding:23px 16px 19px;
+        border-radius:23px;
+    }
+}
+
+@media(max-height:650px){
+    .result-card{
+        padding-top:18px;
+        padding-bottom:15px;
+    }
+
+    .success-circle{
+        width:52px;
+        height:52px;
+        margin-bottom:10px;
+    }
+
+    .result-title{
+        font-size:19px;
+    }
+
+    .result-description{
+        margin-bottom:11px;
+    }
+
+    .install{
+        min-height:51px;
+    }
+
+    .back{
+        margin-top:10px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+        scroll-behavior:auto !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main id="homeView" class="page">
+
+    <header class="hero">
+
+        <img
+            class="logo"
+            src="https://ioscert.io.vn/img/vsign.webp"
+            alt="VSign"
+            onerror="
+                this.style.display='none';
+                document.getElementById('logoFallback').style.display='flex';
+            "
+        >
+
+        <div id="logoFallback" class="logo-fallback">VS</div>
+
+        <h1 class="brand">VSign</h1>
+
+        <p class="tagline">
+            Công cụ ký iPA nhanh, chóng mượt mà dễ dàng sử dụng!
+        </p>
+
+    </header>
+
+
+    <section class="card">
+
+        <div id="tabs" class="tabs">
+
+            <div class="tab-slider"></div>
+
+            <button
+                id="autoTab"
+                class="tab active"
+                type="button"
+                onclick="switchTab('auto')"
+            >
+                Cài đặt tự động
+            </button>
+
+            <button
+                id="manualTab"
+                class="tab"
+                type="button"
+                onclick="switchTab('manual')"
+            >
+                Cài thủ công IPA
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             AUTO
+        ====================================================== -->
+
+        <section id="autoPanel" class="panel active">
+
+            <label class="field-title" for="udid">
+                UDID thiết bị
+            </label>
+
+            <p class="notice">
+                Vui lòng nhập UDID thiết bị của bạn đã mua chứng chỉ
+                tại hệ thống <strong>CHUNGCHIP12.COM</strong>
+                để lấy thông tin và cài đặt ứng dụng!
+            </p>
+
+            <div class="input-wrap">
+
+                <input
+                    id="udid"
+                    class="udid"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    autocapitalize="characters"
+                    spellcheck="false"
+                    maxlength="40"
+                    placeholder="Nhập UDID thiết bị của bạn"
+                >
+
+            </div>
+
+            <button
+                id="signButton"
+                class="primary"
+                type="button"
+                onclick="startSigning()"
+            >
+                Ký ứng dụng
+            </button>
+
+            <p class="helper">
+                Vui lòng kiểm tra chính xác UDID trước khi ký.
+            </p>
+
+            <div id="errorBox" class="error-box"></div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MANUAL
+        ====================================================== -->
+
+        <section id="manualPanel" class="panel">
+
+            <h2 class="manual-title">
+                Cài thủ công IPA
+            </h2>
+
+            <p class="manual-text">
+                Tải file IPA về thiết bị của bạn để tự ký và cài đặt thủ công.
+            </p>
+
+            <a
+                class="manual-download"
+                href="https://agency.chungchip12.com/install/VSign_v1.0_Release.ipa"
+                target="_blank"
+                rel="noopener"
+            >
+                Tải xuống file IPA
+            </a>
+
+            <div class="manual-note">
+                <strong>Hướng dẫn sử dụng:</strong>
+                Khi tải xong IPA, bạn hãy sử dụng các công cụ như
+                <strong>ESign</strong>, <strong>Gbox</strong>,
+                <strong>Scarlet</strong>, ... để ký và cài đặt
+                ứng dụng lên thiết bị.
+            </div>
+
+        </section>
+
+    </section>
+
+
+    <footer class="footer">
+        VSign · iOS Signing Tool
+    </footer>
+
+</main>
+
+
+<!-- ============================================================
+     SIGNING OVERLAY
+============================================================= -->
+
+<div
+    id="signOverlay"
+    class="sign-overlay"
+    aria-hidden="true"
+>
+
+    <div class="sign-modal">
+
+        <div class="progress-ring">
+
+            <svg viewBox="0 0 142 142">
+
+                <defs>
+                    <linearGradient
+                        id="ringGradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop offset="0%" stop-color="#48b5ff"/>
+                        <stop offset="50%" stop-color="#0a84ff"/>
+                        <stop offset="100%" stop-color="#006de8"/>
+                    </linearGradient>
+                </defs>
+
+                <circle
+                    class="ring-bg"
+                    cx="71"
+                    cy="71"
+                    r="60"
+                ></circle>
+
+                <circle
+                    id="ringValue"
+                    class="ring-value"
+                    cx="71"
+                    cy="71"
+                    r="60"
+                ></circle>
+
+            </svg>
+
+            <div class="progress-center">
+
+                <div id="percent" class="percent">0%</div>
+
+            </div>
+
+        </div>
+
+
+        <h2 id="signTitle" class="sign-title">
+            Kiểm tra UDID
+        </h2>
+
+        <p id="signSub" class="sign-sub">
+            Đang chuẩn bị...
+        </p>
+
+
+        <div class="steps">
+
+            <div id="step0" class="step active">
+                <div class="step-dot">1</div>
+                <div class="step-text">Kiểm tra UDID</div>
+            </div>
+
+            <div id="step1" class="step">
+                <div class="step-dot">2</div>
+                <div class="step-text">Kiểm tra đơn hàng</div>
+            </div>
+
+            <div id="step2" class="step">
+                <div class="step-dot">3</div>
+                <div class="step-text">Chuẩn bị chứng chỉ</div>
+            </div>
+
+            <div id="step3" class="step">
+                <div class="step-dot">4</div>
+                <div class="step-text">Ký ứng dụng</div>
+            </div>
+
+            <div id="step4" class="step">
+                <div class="step-dot">5</div>
+                <div class="step-text">Verify & tạo OTA</div>
+            </div>
+
+            <div id="step5" class="step">
+                <div class="step-dot">✓</div>
+                <div class="step-text">Hoàn tất</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ============================================================
+     RESULT
+============================================================= -->
+
+<section id="resultView" class="result-view">
+
+    <div class="result-card">
+
+        <div class="success-circle">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="m5 12 4.2 4.2L19 6.5"></path>
+            </svg>
+
+        </div>
+
+        <h2 class="result-title">
+            Ứng dụng đã sẵn sàng
+        </h2>
+
+        <p class="result-description">
+            Hãy bấm nút <strong>"Cài đặt ngay"</strong>
+            ở phía dưới để tiếp tục!
+        </p>
+
+        <div class="device-box">
+
+            <div class="device-label">
+                THIẾT BỊ
+            </div>
+
+            <div id="resultUdid" class="device-value"></div>
+
+        </div>
+
+        <button
+            id="installButton"
+            class="install"
+            type="button"
+        >
+            Cài đặt ngay
+        </button>
+
+        <div class="expiry">
+            Thời gian hết hạn:
+            <strong id="countdown">15:00</strong>
+        </div>
+
+        <a
+            class="back"
+            href="#"
+            onclick="resetApp();return false;"
+        >
+            ← Ký thiết bị khác
+        </a>
+
+    </div>
+
+</section>
+
+
+<script>
+"use strict";
+
+const state = {
+    signing:false,
+    installUrl:"",
+    expiresAt:0,
+    countdownTimer:null,
+    progressAnimation:null
+};
+
+
+/* ============================================================
+   TAB
+============================================================ */
+
+function switchTab(tab){
+
+    if(state.signing){
+        return;
+    }
+
+    const tabs=document.getElementById("tabs");
+    const autoTab=document.getElementById("autoTab");
+    const manualTab=document.getElementById("manualTab");
+    const autoPanel=document.getElementById("autoPanel");
+    const manualPanel=document.getElementById("manualPanel");
+
+    if(tab==="manual"){
+
+        tabs.classList.add("manual");
+
+        autoTab.classList.remove("active");
+        manualTab.classList.add("active");
+
+        autoPanel.classList.remove("active");
+        manualPanel.classList.add("active");
+
+    }else{
+
+        tabs.classList.remove("manual");
+
+        manualTab.classList.remove("active");
+        autoTab.classList.add("active");
+
+        manualPanel.classList.remove("active");
+        autoPanel.classList.add("active");
+
+    }
+}
+
+
+/* ============================================================
+   INPUT
+============================================================ */
+
+const udidInput=document.getElementById("udid");
+
+udidInput.addEventListener("input",function(){
+
+    this.value=this.value
+        .toUpperCase()
+        .replace(/[^0-9A-F-]/g,"");
+
+    hideError();
+});
+
+
+function isValidUdid(value){
+
+    return (
+        /^[0-9A-F]{8}-[0-9A-F]{16}$/.test(value)
+        ||
+        /^[0-9A-F]{40}$/.test(value)
+    );
+}
+
+
+/* ============================================================
+   ERROR
+============================================================ */
+
+function showError(message){
+
+    const box=document.getElementById("errorBox");
+
+    box.textContent=message||"Có lỗi xảy ra.";
+
+    box.classList.add("show");
+}
+
+function hideError(){
+
+    document
+        .getElementById("errorBox")
+        .classList.remove("show");
+}
+
+
+/* ============================================================
+   PROGRESS
+============================================================ */
+
+const CIRCUMFERENCE=2*Math.PI*60;
+const ring=document.getElementById("ringValue");
+
+ring.style.strokeDasharray=CIRCUMFERENCE;
+ring.style.strokeDashoffset=CIRCUMFERENCE;
+
+
+function setProgress(value){
+
+    const safe=Math.max(0,Math.min(100,value));
+
+    document.getElementById("percent").textContent=
+        Math.round(safe)+"%";
+
+    ring.style.strokeDashoffset=
+        CIRCUMFERENCE-(safe/100)*CIRCUMFERENCE;
+}
+
+
+function setStep(index){
+
+    for(let i=0;i<=5;i++){
+
+        const element=document.getElementById("step"+i);
+
+        if(!element){
+            continue;
+        }
+
+        element.classList.remove("active","done");
+
+        if(i<index){
+            element.classList.add("done");
+        }
+
+        if(i===index){
+            element.classList.add("active");
+        }
+    }
+}
+
+
+function updateSigningText(title,sub,step){
+
+    document.getElementById("signTitle").textContent=title;
+    document.getElementById("signSub").textContent=sub;
+
+    setStep(step);
+}
+
+
+function animateProgress(from,to,duration,title,sub,step){
+
+    return new Promise(resolve=>{
+
+        const start=performance.now();
+
+        updateSigningText(
+            title,
+            sub,
+            step
+        );
+
+        function frame(now){
+
+            const elapsed=now-start;
+            const raw=Math.min(elapsed/duration,1);
+
+            const eased=
+                1-Math.pow(1-raw,3);
+
+            const value=
+                from+((to-from)*eased);
+
+            setProgress(value);
+
+            if(raw<1){
+
+                state.progressAnimation=
+                    requestAnimationFrame(frame);
+
+            }else{
+
+                resolve();
+            }
+        }
+
+        state.progressAnimation=
+            requestAnimationFrame(frame);
+    });
+}
+
+
+async function runVisualProgress(){
+
+    setProgress(0);
+
+    await animateProgress(
+        0,
+        7,
+        650,
+        "Kiểm tra UDID",
+        "Đang xác thực định dạng thiết bị...",
+        0
+    );
+
+    await animateProgress(
+        7,
+        18,
+        850,
+        "Kiểm tra đơn hàng",
+        "Đang tìm đơn hàng theo UDID...",
+        1
+    );
+
+    await animateProgress(
+        18,
+        37,
+        1000,
+        "Chuẩn bị chứng chỉ",
+        "Đang tải và xử lý chứng chỉ...",
+        2
+    );
+
+    await animateProgress(
+        37,
+        68,
+        1350,
+        "Ký ứng dụng",
+        "Đang ký IPA trên server...",
+        3
+    );
+
+    await animateProgress(
+        68,
+        91,
+        1550,
+        "Verify & tạo OTA",
+        "Đang kiểm tra chữ ký và tạo link cài đặt...",
+        4
+    );
+}
+
+
+/* ============================================================
+   OVERLAY
+============================================================ */
+
+function showOverlay(){
+
+    const overlay=document.getElementById("signOverlay");
+
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden","false");
+
+    document.body.style.overflow="hidden";
+}
+
+
+function hideOverlay(){
+
+    const overlay=document.getElementById("signOverlay");
+
+    overlay.classList.remove("show");
+    overlay.setAttribute("aria-hidden","true");
+
+    document.body.style.overflow="";
+}
+
+
+/* ============================================================
+   SIGN
+============================================================ */
+
+async function startSigning(){
+
+    if(state.signing){
+        return;
+    }
+
+    const udid=udidInput.value
+        .trim()
+        .toUpperCase();
+
+    hideError();
+
+    if(!isValidUdid(udid)){
+
+        showError(
+            "UDID không đúng định dạng. Vui lòng kiểm tra lại UDID thiết bị."
+        );
+
+        udidInput.focus();
+
+        return;
+    }
+
+    state.signing=true;
+
+    const button=document.getElementById("signButton");
+
+    button.disabled=true;
+
+    showOverlay();
+
+    const visual=runVisualProgress();
+
+    let response;
+
+    try{
+
+        response=await fetch(
+            "/api/sign",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    udid:udid
+                })
+            }
+        );
+
+    }catch(error){
+
+        state.signing=false;
+        button.disabled=false;
+
+        if(state.progressAnimation){
+            cancelAnimationFrame(state.progressAnimation);
+        }
+
+        hideOverlay();
+
+        showError(
+            "Không thể kết nối tới server. Vui lòng thử lại."
+        );
+
+        return;
+    }
+
+
+    let data={};
+
+    try{
+        data=await response.json();
+    }catch(error){
+        data={};
+    }
+
+
+    if(!response.ok || !data.success){
+
+        state.signing=false;
+        button.disabled=false;
+
+        if(state.progressAnimation){
+            cancelAnimationFrame(state.progressAnimation);
+        }
+
+        hideOverlay();
+
+        showError(
+            data.message ||
+            "Server trả về dữ liệu không hợp lệ."
+        );
+
+        return;
+    }
+
+
+    await visual;
+
+    await animateProgress(
+        91,
+        100,
+        650,
+        "Hoàn tất!",
+        "Ứng dụng đã được ký và xác thực thành công.",
+        5
+    );
+
+
+    state.installUrl=data.install_url||"";
+
+    state.expiresAt=
+        Number(data.expires_at)
+        ||
+        (
+            Date.now()/1000+
+            Number(data.ttl_seconds||900)
+        );
+
+
+    setTimeout(()=>{
+
+        hideOverlay();
+
+        showResult(udid);
+
+        state.signing=false;
+
+    },220);
+}
+
+
+/* ============================================================
+   RESULT
+============================================================ */
+
+function showResult(udid){
+
+    document.getElementById("homeView").style.display="none";
+
+    const result=document.getElementById("resultView");
+
+    result.classList.add("show");
+
+    document.getElementById("resultUdid").textContent=udid;
+
+    const install=document.getElementById("installButton");
+
+    install.classList.remove("expired");
+    install.disabled=false;
+    install.textContent="Cài đặt ngay";
+
+    install.onclick=function(){
+
+        if(
+            !state.installUrl ||
+            Date.now()/1000>=state.expiresAt
+        ){
+            expireResult();
+            return;
+        }
+
+        window.location.href=state.installUrl;
+    };
+
+    startCountdown();
+}
+
+
+/* ============================================================
+   COUNTDOWN
+============================================================ */
+
+function startCountdown(){
+
+    stopCountdown();
+
+    updateCountdown();
+
+    state.countdownTimer=setInterval(
+        updateCountdown,
+        250
+    );
+}
+
+
+function stopCountdown(){
+
+    if(state.countdownTimer){
+
+        clearInterval(state.countdownTimer);
+
+        state.countdownTimer=null;
+    }
+}
+
+
+function updateCountdown(){
+
+    const remaining=Math.max(
+        0,
+        state.expiresAt-Date.now()/1000
+    );
+
+    const totalSeconds=Math.ceil(remaining);
+
+    const minutes=Math.floor(totalSeconds/60);
+    const seconds=totalSeconds%60;
+
+    document.getElementById("countdown").textContent=
+        String(minutes).padStart(2,"0")
+        +":"
+        +String(seconds).padStart(2,"0");
+
+    if(totalSeconds<=0){
+        expireResult();
+    }
+}
+
+
+function expireResult(){
+
+    stopCountdown();
+
+    const install=document.getElementById("installButton");
+
+    install.disabled=true;
+    install.classList.add("expired");
+    install.textContent="Đã hết hạn";
+
+    document.getElementById("countdown").textContent="00:00";
+}
+
+
+/* ============================================================
+   RESET
+============================================================ */
+
+function resetApp(){
+
+    stopCountdown();
+
+    if(state.progressAnimation){
+        cancelAnimationFrame(state.progressAnimation);
+    }
+
+    state.signing=false;
+    state.installUrl="";
+    state.expiresAt=0;
+
+    document.getElementById("resultView")
+        .classList.remove("show");
+
+    document.getElementById("homeView")
+        .style.display="";
+
+    document.getElementById("signButton")
+        .disabled=false;
+
+    udidInput.value="";
+
+    hideError();
+
+    setProgress(0);
+    setStep(0);
+    switchTab("auto");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* ============================================================
+   INITIAL
+============================================================ */
+
+setProgress(0);
+setStep(0);
+</script>
+
+</body>
+</html>
