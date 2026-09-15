@@ -1480,7 +1480,7 @@ a{
                 <div class="preview-card">
                     <img
                         class="preview-image"
-                        src="https://agency.chungchip12.com/img/vsign-preview1.webp"
+                        src="https://agency.chungchip12.com/img/26517D63-9AA8-47ED-AEA9-60FB6F93FBCC.webp"
                         alt="Giao diện ứng dụng VSign"
                         loading="eager"
                     >
@@ -1951,6 +1951,31 @@ function switchTab(tab){
 ============================================================ */
 
 const udidInput=document.getElementById("udid");
+
+/* ============================================================
+   AUTO-FILL UDID FROM URL
+   Supports: https://vsign.download/?udid=XXXX
+============================================================ */
+(function autoFillUdidFromUrl(){
+    const params=new URLSearchParams(window.location.search);
+    const urlUdid=(params.get("udid")||"")
+        .trim()
+        .toUpperCase()
+        .replace(/[^0-9A-F-]/g,"");
+
+    if(!urlUdid){
+        return;
+    }
+
+    if(!isValidUdid(urlUdid)){
+        return;
+    }
+
+    udidInput.value=urlUdid;
+
+    udidInput.dispatchEvent(new Event("input",{bubbles:true}));
+    udidInput.dispatchEvent(new Event("change",{bubbles:true}));
+})();
 
 udidInput.addEventListener("input",function(){
 
