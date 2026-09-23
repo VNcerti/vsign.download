@@ -102,32 +102,6 @@
         <div class="container signing-grid">
 
             <section class="page-card sign-card">
-                <div class="card-heading">
-                    <h2>Ký ứng dụng VSign</h2>
-                    <p>Chọn phương thức cài đặt phù hợp với thiết bị của bạn.</p>
-                </div>
-
-                <div id="tabs" class="tabs">
-                    <div class="tab-slider"></div>
-
-                    <button
-                        id="autoTab"
-                        class="tab active"
-                        type="button"
-                        onclick="switchTab('auto')"
-                    >
-                        Cài đặt tự động
-                    </button>
-
-                    <button
-                        id="manualTab"
-                        class="tab"
-                        type="button"
-                        onclick="switchTab('manual')"
-                    >
-                        Cài thủ công IPA
-                    </button>
-                </div>
 
                 <section id="autoPanel" class="panel active">
                     <label class="field-title" for="udid">
@@ -160,7 +134,7 @@
                         type="button"
                         onclick="startSigning()"
                     >
-                        Cài đặt ngay
+                        Ký ứng dụng
                     </button>
 
                     <p class="helper">
@@ -168,31 +142,6 @@
                     </p>
 
                     <div id="errorBox" class="error-box"></div>
-                </section>
-
-                <section id="manualPanel" class="panel">
-                    <h2 class="manual-title">Cài thủ công IPA</h2>
-
-                    <p class="manual-text">
-                        Tải file IPA về thiết bị của bạn để tự ký và cài đặt thủ công.
-                    </p>
-
-                    <a
-                        class="manual-download"
-                        href="https://agency.chungchip12.com/install/VSign_v1.0_Release.ipa"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        Tải xuống file IPA
-                    </a>
-
-                    <div class="manual-note">
-                        <strong>Hướng dẫn sử dụng:</strong>
-                        Khi tải xong IPA, bạn hãy sử dụng các công cụ như
-                        <strong>ESign</strong>, <strong>Gbox</strong>,
-                        <strong>Scarlet</strong>, ... để ký và cài đặt
-                        ứng dụng lên thiết bị.
-                    </div>
                 </section>
             </section>
 
@@ -240,8 +189,8 @@
                             </svg>
                         </div>
                         <div>
-                            <strong>Hai cách cài đặt</strong>
-                            <span>Cài tự động hoặc tải IPA để ký thủ công.</span>
+                            <strong>Cài đặt tự động</strong>
+                            <span>Chỉ cần UDID, VSign xử lý phần còn lại.</span>
                         </div>
                     </div>
                 </div>
@@ -274,11 +223,10 @@
                         </span>
                     </summary>
                     <div class="faq-answer">
-                        Để cài đặt VSign, bạn có thể sử dụng <strong>2 cách</strong>:
-                        <ul>
-                            <li><strong>Cài đặt trực tiếp:</strong> Khi bạn có đơn hàng tại CHỨNG CHỈ P12, hãy nhập UDID vào VSign rồi bấm <strong>Ký ứng dụng</strong>.</li>
-                            <li><strong>Cài đặt thủ công bằng IPA:</strong> Tải file IPA VSign về và sử dụng các ứng dụng bên thứ 3 như ESign, Gbox, Scarlet... để ký và cài đặt.</li>
-                        </ul>
+                        Để cài đặt VSign, bạn chỉ cần nhập <strong>UDID thiết bị</strong>
+                        đã mua chứng chỉ tại hệ thống, sau đó bấm
+                        <strong>Ký ứng dụng</strong>. VSign sẽ tự động xử lý
+                        và hiển thị nút cài đặt khi hoàn tất.
                     </div>
                 </details>
 
