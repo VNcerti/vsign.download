@@ -43,6 +43,11 @@ body{
     letter-spacing:-.01em;
 }
 
+/* Khi guide mở, khóa scroll body */
+body.guide-open{
+    overflow:hidden;
+}
+
 button,input{
     font:inherit;
 }
@@ -723,6 +728,7 @@ a{
 
 /* ============================================================
    GUIDE VIEW — Route #huong-dan (full-screen)
+   Mặc định pointer-events:none → KHÔNG chặn click khi ẩn
 ============================================================ */
 
 .guide-view{
@@ -737,7 +743,7 @@ a{
     background:#fbfbfd;
     opacity:0;
     visibility:hidden;
-    pointer-events:none;
+    pointer-events:none; /* QUAN TRỌNG: không chặn click khi ẩn */
     transform:translateY(20px);
     transition:opacity .35s var(--ease),visibility .35s var(--ease),transform .45s var(--ease-out);
 }
@@ -984,7 +990,7 @@ a{
 
 .sign-overlay{
     position:fixed;
-    z-index:1000;
+    z-index:1200;
     inset:0;
     display:flex;
     align-items:center;
