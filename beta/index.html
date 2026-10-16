@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="https://cdn.phototourl.com/free/2026-09-16-2aee6e0c-3e0c-40a5-834d-ecd60673a5ce.png" type="image/x-icon">
+<meta name="theme-color" content="#f7fbff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="VSign - Công cụ ký IPA nhanh chóng, mượt mà và dễ sử dụng.">
+
+<title>VSign — iOS Signing Tool</title>
+<link rel="stylesheet" href="css/style.css">
+
+
+
+<style>
+/* ============================================================
+   VSign — UDID NOT FOUND ALERT + BANNED ALERT
+   Chỉ dùng cho alert mới, không ảnh hưởng UI hiện tại.
+============================================================ */
+.vsign-alert-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(15,23,42,.34);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .2s ease, visibility .2s ease;
+}
+
+.vsign-alert-overlay.show{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+}
+
+.vsign-alert{
+    width:min(100%,430px);
+    background:#fff;
+    border:1px solid rgba(15,23,42,.08);
+    border-radius:22px;
+    padding:26px 22px 20px;
+    box-shadow:0 20px 55px rgba(15,23,42,.18);
+    text-align:center;
+    transform:translateY(8px) scale(.98);
+    transition:transform .2s ease;
+}
+
+.vsign-alert-overlay.show .vsign-alert{
+    transform:translateY(0) scale(1);
+}
+
+.vsign-alert-icon{
+    width:46px;
+    height:46px;
+    margin:0 auto 14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#fff1f1;
+    color:#e53935;
+    font-size:23px;
+    font-weight:700;
+}
+
+.vsign-alert-title{
+    margin:0 0 12px;
+    color:#e53935;
+    font-size:19px;
+    line-height:1.25;
+    font-weight:800;
+    letter-spacing:-.2px;
+}
+
+.vsign-alert-message{
+    margin:0;
+    color:#3f4650;
+    font-size:14px;
+    line-height:1.65;
+}
+
+.vsign-alert-message strong{
+    color:#20242a;
+    font-weight:700;
+}
+
+.vsign-alert-buy{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:48px;
+    margin-top:20px;
+    padding:0 18px;
+    border-radius:14px;
+    background:#e53935;
+    color:#fff !important;
+    text-decoration:none !important;
+    font-size:13px;
+    font-weight:750;
+    letter-spacing:.1px;
+    box-sizing:border-box;
+    transition:transform .15s ease, background .15s ease;
+}
+
+.vsign-alert-buy:hover{
+    background:#d9322f;
+}
+
+.vsign-alert-buy:active{
+    transform:scale(.98);
+}
+
+@media(max-width:640px){
+    .vsign-alert-overlay{
+        padding:16px;
+    }
+
+    .vsign-alert{
+        padding:23px 18px 18px;
+        border-radius:20px;
+    }
+
+    .vsign-alert-title{
+        font-size:18px;
+    }
+
+    .vsign-alert-message{
+        font-size:13px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand-link" href="#home">
+            <img
+                class="header-logo"
+                src="https://i.imgur.com/qGuaX3J.png"
+                alt="VSign"
+                onerror="
+                    this.style.display='none';
+                    document.getElementById('headerLogoFallback').style.display='flex';
+                "
+            >
+            <div id="headerLogoFallback" class="header-logo-fallback">VS</div>
+            <span class="header-brand">VSign</span>
+        </a>
+
+        <nav class="header-nav" aria-label="Điều hướng">
+            <a href="#signing">Ký ứng dụng</a>
+            <a href="#preview">Xem trước</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+    </div>
+</header>
+
+<main id="homeView">
+
+    <section id="home" class="hero-section">
+        <div class="container hero-grid">
+
+            <div class="hero-copy">
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    VSign Version 1.1
+                </div>
+
+                <h1 class="hero-title">
+                    Ký IPA.<br>
+                    <span>Cài đặt dễ dàng.</span>
+                </h1>
+
+                <p class="hero-description">
+                    VSign giúp bạn ký và cài đặt ứng dụng iOS nhanh chóng
+                    bằng UDID đã đăng ký. Giao diện đơn giản, thao tác gọn
+                    và tối ưu cho iPhone.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="hero-action primary-action" href="#signing">
+                        Bắt đầu ký ứng dụng
+                    </a>
+                    <a class="hero-action secondary-action" href="https://vsign.download/huong-dan.html">
+                        Xem hướng dẫn
+                    </a>
+                </div>
+
+                <div class="hero-note">
+                    Nhanh chóng · Gọn gàng · Dễ sử dụng
+                </div>
+            </div>
+
+            <div id="preview" class="preview-wrap">
+                <div class="preview-glow"></div>
+
+                <div class="preview-card">
+                    <img
+                        class="preview-image"
+                        src="https://agency.chungchip12.com/img/26517D63-9AA8-47ED-AEA9-60FB6F93FBCC.webp"
+                        alt="Giao diện ứng dụng VSign"
+                        loading="eager"
+                    >
+
+                    <div class="preview-caption">
+                        <strong>Trải nghiệm VSign trên iPhone/iPad</strong>
+                        <span>App Preview</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="signing" class="signing-section">
+        <div class="container signing-grid">
+
+            <section class="page-card sign-card">
+
+                <section id="autoPanel" class="panel active">
+                    <label class="field-title" for="udid">
+                        UDID thiết bị
+                    </label>
+
+                    <p class="notice">
+                        Vui lòng nhập UDID thiết bị của bạn đã mua chứng chỉ
+                        tại hệ thống <strong>CHUNGCHIP12.COM</strong>
+                        để lấy thông tin và cài đặt ứng dụng!
+                    </p>
+
+                    <div class="input-wrap">
+                        <input
+                            id="udid"
+                            class="udid"
+                            type="text"
+                            inputmode="text"
+                            autocomplete="off"
+                            autocapitalize="characters"
+                            spellcheck="false"
+                            maxlength="40"
+                            placeholder="Nhập UDID thiết bị của bạn"
+                        >
+                    </div>
+
+                    <button
+                        id="signButton"
+                        class="primary"
+                        type="button"
+                        onclick="handlePrimaryAction()"
+                        aria-live="polite"
+                    >
+                        Lấy UDID
+                    </button>
+
+                    <p class="helper">
+                        Vui lòng kiểm tra chính xác UDID trước khi ký.
+                    </p>
+
+                    <div id="errorBox" class="error-box"></div>
+                </section>
+            </section>
+
+            <aside class="page-card info-card">
+                <p class="info-kicker">VSign experience</p>
+                <h2 class="info-title">Một cách đơn giản hơn để cài ứng dụng.</h2>
+                <p class="info-text">
+                    VSign tập trung vào những thao tác cần thiết để quá trình
+                    ký và cài đặt trở nên trực quan, nhẹ nhàng và dễ hiểu.
+                </p>
+
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v12"></path>
+                                <path d="m7 10 5 5 5-5"></path>
+                                <path d="M5 21h14"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Ký nhanh</strong>
+                            <span>Nhập UDID và bắt đầu quá trình ký.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="3"></rect>
+                                <path d="M12 18h.01"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tối ưu cho iPhone</strong>
+                            <span>Giao diện responsive, thao tác thuận tiện trên màn hình nhỏ.</span>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v18"></path>
+                                <path d="M3 12h18"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Cài đặt tự động</strong>
+                            <span>Chỉ cần UDID, VSign xử lý phần còn lại.</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+        <div class="container">
+
+            <div class="section-heading">
+                <p class="kicker">FAQ</p>
+                <h2>Câu hỏi thường gặp</h2>
+                <p>
+                    Một vài thông tin giúp bạn sử dụng VSign nhanh hơn.
+                    Bấm vào từng câu hỏi để xem câu trả lời.
+                </p>
+            </div>
+
+            <div class="faq-list">
+
+                <details class="faq-item">
+                    <summary>
+                        Tôi có thể cài đặt VSign như thế nào?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Để cài đặt VSign, bạn chỉ cần nhập <strong>UDID thiết bị</strong>
+                        đã mua chứng chỉ tại hệ thống, sau đó bấm
+                        <strong>Ký ứng dụng</strong>. VSign sẽ tự động xử lý
+                        và hiển thị nút cài đặt khi hoàn tất.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Có giới hạn kích thước IPA không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        <strong>VSign hỗ trợ ký ứng dụng không giới hạn dung lượng!</strong>
+                        Thời gian xử lý thực tế có thể phụ thuộc vào kích thước ứng dụng và tốc độ kết nối.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        UDID là gì và lấy UDID ở đâu?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        UDID là mã nhận diện riêng của thiết bị iPhone/iPad. Bạn cần lấy đúng UDID của thiết bị đã đăng ký chứng chỉ trước khi thực hiện ký ứng dụng.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Vì sao tôi nhập đúng UDID nhưng không thể ký?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Hãy kiểm tra lại UDID và trạng thái đơn hàng/chứng chỉ của bạn. Thiết bị cần có đơn hàng hợp lệ và chứng chỉ tương ứng trước khi VSign có thể thực hiện ký.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Sau khi ký xong, tôi cài ứng dụng ở đâu?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Khi quá trình ký hoàn tất, VSign sẽ hiển thị nút <strong>Cài đặt ngay</strong>. Bạn chỉ cần bấm nút này để tiếp tục quá trình cài đặt ứng dụng trên thiết bị.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        Tôi có thể ký lại cho thiết bị khác không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        Có. Sau khi hoàn tất một lượt ký, bạn có thể chọn <strong>“Ký thiết bị khác”</strong> để quay lại màn hình chính và nhập UDID mới.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>
+                        File IPA ký xong có được lưu vĩnh viễn không?
+                        <span class="faq-chevron">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m6 9 6 6 6-6"></path>
+                            </svg>
+                        </span>
+                    </summary>
+                    <div class="faq-answer">
+                        File ký được tạo để phục vụ quá trình cài đặt. Thời gian tồn tại của file phụ thuộc vào hệ thống VSign và phiên ký hiện tại.
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <img src="https://i.imgur.com/qGuaX3J.png" alt="VSign">
+            <span>VSign · iOS Signing Tool</span>
+        </div>
+        <div class="footer-copy">
+            © 2026 VSign. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+
+<!-- ============================================================
+     UDID NOT FOUND ALERT
+============================================================= -->
+<div
+    id="noOrderAlert"
+    class="vsign-alert-overlay"
+    aria-hidden="true"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="noOrderAlertTitle"
+>
+    <div class="vsign-alert">
+        <div class="vsign-alert-icon">!</div>
+
+        <h2 id="noOrderAlertTitle" class="vsign-alert-title">
+            KÝ ỨNG DỤNG THẤT BẠI
+        </h2>
+
+        <p class="vsign-alert-message">
+            ⚠️ <strong>UDID không tồn tại trên hệ thống.</strong><br>
+            Vui lòng mua chứng chỉ và đăng ký UDID trước.
+            <strong>Chỉ thiết bị có chứng chỉ hợp lệ</strong>
+            mới được hỗ trợ ký và cài đặt ứng dụng.
+        </p>
+
+        <a
+            class="vsign-alert-buy"
+            href="https://chungchip12.com"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            MUA CHỨNG CHỈ NGAY
+        </a>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     UDID BANNED ALERT
+     Alert hiển thị khi UDID bị admin ban qua lệnh /ban
+============================================================= -->
+<div
+    id="bannedAlert"
+    class="vsign-alert-overlay"
+    aria-hidden="true"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="bannedAlertTitle"
+>
+    <div class="vsign-alert">
+        <div class="vsign-alert-icon">!</div>
+
+        <h2 id="bannedAlertTitle" class="vsign-alert-title">
+            CẢNH BÁO
+        </h2>
+
+        <p class="vsign-alert-message">
+            ⚠️ <strong>UDID của bạn đã bị tạm cấm sử dụng dịch vụ tại hệ thống VSign</strong>
+            <br><br>
+            Lí do: <strong id="bannedReason"></strong>
+        </p>
+
+        <a
+            class="vsign-alert-buy"
+            href="https://chungchip12.com"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            MUA CHỨNG CHỈ NGAY
+        </a>
+    </div>
+</div>
+
+
+<!-- ============================================================
+     SIGNING OVERLAY
+     IDs and structure preserved for existing signing logic.
+============================================================ -->
+
+<div id="signOverlay" class="sign-overlay" aria-hidden="true">
+    <div class="sign-modal">
+
+        <div class="progress-ring">
+            <svg viewBox="0 0 142 142">
+                <defs>
+                    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#48b5ff"/>
+                        <stop offset="50%" stop-color="#0a84ff"/>
+                        <stop offset="100%" stop-color="#006de8"/>
+                    </linearGradient>
+                </defs>
+
+                <circle class="ring-bg" cx="71" cy="71" r="60"></circle>
+                <circle id="ringValue" class="ring-value" cx="71" cy="71" r="60"></circle>
+            </svg>
+
+            <div class="progress-center">
+                <div id="percent" class="percent">0%</div>
+            </div>
+        </div>
+
+        <h2 id="signTitle" class="sign-title">Kiểm tra UDID</h2>
+
+        <p id="signSub" class="sign-sub">Đang chuẩn bị...</p>
+
+        <div class="steps">
+            <div id="step0" class="step active">
+                <div class="step-dot">1</div>
+                <div class="step-text">Kiểm tra UDID</div>
+            </div>
+
+            <div id="step1" class="step">
+                <div class="step-dot">2</div>
+                <div class="step-text">Kiểm tra đơn hàng</div>
+            </div>
+
+            <div id="step2" class="step">
+                <div class="step-dot">3</div>
+                <div class="step-text">Chuẩn bị chứng chỉ</div>
+            </div>
+
+            <div id="step3" class="step">
+                <div class="step-dot">4</div>
+                <div class="step-text">Ký ứng dụng</div>
+            </div>
+
+            <div id="step4" class="step">
+                <div class="step-dot">5</div>
+                <div class="step-text">Verify & tạo OTA</div>
+            </div>
+
+            <div id="step5" class="step">
+                <div class="step-dot">✓</div>
+                <div class="step-text">Hoàn tất</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================================
+     RESULT
+============================================================ -->
+
+<section id="resultView" class="result-view">
+    <div class="result-card">
+
+        <div class="success-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 12 4.2 4.2L19 6.5"></path>
+            </svg>
+        </div>
+
+        <h2 class="result-title">Ứng dụng đã sẵn sàng</h2>
+
+        <p class="result-description">
+            Hãy bấm nút <strong>"Cài đặt ngay"</strong>
+            ở phía dưới để tiếp tục!
+        </p>
+
+        <div class="device-box">
+            <div class="device-label">THIẾT BỊ</div>
+            <div id="resultUdid" class="device-value"></div>
+        </div>
+
+        <button id="installButton" class="install" type="button">
+            Cài đặt ngay
+        </button>
+
+        <div class="expiry">
+            Thời gian hết hạn:
+            <strong id="countdown">15:00</strong>
+        </div>
+
+        <a
+            class="back"
+            href="#"
+            onclick="resetApp();return false;"
+        >
+            ← Ký thiết bị khác
+        </a>
+
+    </div>
+</section>
+
+
+
+    <script src="js/1-core.js"></script>
+    <script src="js/2-signing.js"></script>
+    <script src="js/3-result.js"></script>
+
+</body>
+</html>
