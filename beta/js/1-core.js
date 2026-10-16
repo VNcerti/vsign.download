@@ -88,22 +88,28 @@ function stopUdidPolling() {
 function applyRetrievedUdid(udid) {
     const normalized = String(udid || "").trim().toUpperCase();
     if (!isValidUdid(normalized) || !udidInput) return false;
+
+    // Stop the polling session before navigating so pageshow cannot restart it.
     stopUdidPolling();
     state.udidRequestInProgress = false;
     state.udidRequestToken = "";
     try { sessionStorage.removeItem("vsign_udid_token"); } catch (_) {}
+
+    // Send the user to the exact destination URL requested. The normal URL
+    // auto-fill handler then populates the UDID and switches the button to sign.
+    const destination = `https://vsign.download/?udid=${encodeURIComponent(normalized)}`;
+    if (window.location.href !== destination) {
+        window.location.replace(destination);
+        return true;
+    }
+
+    // Fallback if already at the destination.
     udidInput.value = normalized;
     setUdidSuccessState(true);
     udidInput.dispatchEvent(new Event("input", { bubbles: true }));
     udidInput.dispatchEvent(new Event("change", { bubbles: true }));
     setUdidSuccessState(true);
     updatePrimaryButton();
-    try {
-        const cleanUrl = new URL(window.location.href);
-        cleanUrl.searchParams.delete("udid");
-        cleanUrl.searchParams.delete("udid_token");
-        window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
-    } catch (_) {}
     const helper = document.querySelector("#autoPanel .helper");
     if (helper) helper.textContent = "Đã lấy UDID thành công. Bạn có thể bấm Ký ứng dụng.";
     return true;
@@ -176,6 +182,15 @@ function resumeUdidRetrieval() {
         try { token = sessionStorage.getItem("vsign_udid_token") || ""; } catch (_) {}
     }
     if (!token) return;
+
+    // Avoid creating duplicate polling timers when pageshow and visibilitychange
+    // fire close together on iOS Safari.
+    if (state.udidRequestToken === token && state.udidPollTimer) {
+        pollUdidStatus(token);
+        return;
+    }
+
+    stopUdidPolling();
     state.udidRequestToken = token;
     state.udidRequestInProgress = true;
     state.udidPollTimer = setInterval(() => pollUdidStatus(token), 2000);
@@ -406,6 +421,20 @@ function hideError(){
     hideNoOrderAlert();
     hideBannedAlert();
 }
+
+// iOS may suspend Safari while Settings is open. Resume polling immediately
+// when the user returns to Safari instead of waiting for the next interval.
+window.addEventListener("pageshow", function () {
+    updatePrimaryButton();
+    resumeUdidRetrieval();
+});
+
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+        updatePrimaryButton();
+        resumeUdidRetrieval();
+    }
+});
 
 updatePrimaryButton();
 resumeUdidRetrieval();
