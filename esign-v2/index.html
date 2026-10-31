@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f9fc">
+  <meta name="description" content="ESign v2 - Công cụ ký và cài đặt ứng dụng iOS.">
+  <title>ESign v2 — iOS Signing</title>
+  <link rel="icon" href="https://agency.chungchip12.com/img/esign-v2.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page" id="homeView">
+    <section class="sign-card" aria-labelledby="pageTitle">
+      <div class="app-mark">
+        <img src="https://agency.chungchip12.com/img/esign-v2.png" alt="ESign v2">
+      </div>
+      <h1 id="pageTitle">Ký ứng dụng ESign v2</h1>
+      <p class="intro">Vui lòng nhập UDID thiết bị của bạn đã mua chứng chỉ tại hệ thống <strong>CHUNGCHIP12.COM</strong> để lấy thông tin và cài đặt ứng dụng!</p>
+
+      <label for="udid">UDID thiết bị</label>
+      <input id="udid" type="text" inputmode="text" autocomplete="off"
+             autocapitalize="characters" spellcheck="false" maxlength="40"
+             placeholder="Nhập UDID thiết bị của bạn">
+      <button id="signButton" type="button">Bắt đầu ký</button>
+      <p class="helper">Vui lòng kiểm tra chính xác UDID trước khi ký.</p>
+      <div id="errorBox" class="error" role="alert"></div>
+    </section>
+    <footer>© 2026 ESign v2</footer>
+  </main>
+
+  <section id="signOverlay" class="overlay" aria-hidden="true">
+    <div class="progress-card">
+      <div class="spinner" aria-hidden="true"></div>
+      <h2 id="signTitle">Đang kiểm tra UDID</h2>
+      <p id="signSub">Vui lòng chờ trong giây lát...</p>
+      <div class="progress-track"><div id="progressBar"></div></div>
+      <div id="percent">0%</div>
+      <div class="steps">
+        <span id="step0" class="active">Kiểm tra UDID</span>
+        <span id="step1">Kiểm tra đơn hàng</span>
+        <span id="step2">Chuẩn bị chứng chỉ</span>
+        <span id="step3">Ký ứng dụng</span>
+        <span id="step4">Xác minh và tạo link</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="resultView" class="result-page" aria-live="polite">
+    <div class="result-card">
+      <div class="success">✓</div>
+      <h2>Ứng dụng đã sẵn sàng</h2>
+      <p>ESign v2 đã được xử lý. Bấm nút bên dưới để cài đặt.</p>
+      <div class="device"><small>UDID THIẾT BỊ</small><strong id="resultUdid"></strong></div>
+      <button id="installButton" type="button">Cài đặt ngay</button>
+      <p class="expiry">Link hết hạn sau <strong id="countdown">15:00</strong></p>
+      <button class="back" id="resetButton" type="button">← Ký thiết bị khác</button>
+    </div>
+  </section>
+
+  <div id="noOrderAlert" class="alert-overlay" aria-hidden="true">
+    <div class="alert-card">
+      <div class="alert-icon">!</div>
+      <h2>UDID không tồn tại</h2>
+      <p>Vui lòng mua chứng chỉ và đăng ký UDID trước khi ký ứng dụng.</p>
+      <a href="https://chungchip12.com" target="_blank" rel="noopener">Mua chứng chỉ</a>
+      <button type="button" data-close-alert>Đóng</button>
+    </div>
+  </div>
+  <div id="bannedAlert" class="alert-overlay" aria-hidden="true">
+    <div class="alert-card">
+      <div class="alert-icon">!</div>
+      <h2>Thiết bị bị tạm khóa</h2>
+      <p id="bannedReason"></p>
+      <button type="button" data-close-alert>Đóng</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;color:#202938;background:#f7f9fc}
+body{margin:0;min-height:100vh;background:#f7f9fc}
+button,input{font:inherit}
+.page{width:min(100% - 32px,480px);margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+.sign-card{margin:auto 0;background:#fff;border:1px solid #e7ebf0;border-radius:22px;padding:28px 23px;box-shadow:0 12px 38px rgba(31,50,75,.06)}
+.app-mark{display:flex;justify-content:center;margin:0 auto 16px}.app-mark img{width:76px;height:76px;object-fit:contain;border-radius:18px}
+h1{text-align:center;font-size:22px;letter-spacing:-.6px;margin:0}.intro{text-align:center;color:#8792a1;font-size:13px;line-height:1.7;margin:10px 0 25px}.intro strong{color:#344054;font-weight:800}
+label{display:block;font-size:13px;font-weight:750;margin-bottom:8px}
+input{width:100%;height:53px;border:1px solid #dce2e9;border-radius:13px;padding:0 14px;outline:none;color:#263244;font-size:14px;text-transform:uppercase}
+input:focus{border-color:#3988ed;box-shadow:0 0 0 3px #3988ed16}
+input::placeholder{text-transform:none;color:#a3acb8}
+#signButton,#installButton{width:100%;height:53px;border:0;border-radius:13px;background:#1678e8;color:#fff;font-weight:800;margin-top:12px;cursor:pointer}
+#signButton:disabled,#installButton:disabled{opacity:.55;cursor:not-allowed}
+.helper{text-align:center;color:#9aa3af;font-size:11px;margin:12px 0 0}
+.error{display:none;margin-top:13px;padding:11px 12px;background:#fff4f3;border:1px solid #ffd9d5;border-radius:11px;color:#c43f38;font-size:12px;line-height:1.5}.error.show{display:block}
+footer{text-align:center;color:#a2aab5;font-size:11px;padding:25px 0}
+.overlay,.alert-overlay{position:fixed;inset:0;background:#15223866;backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.overlay.show,.alert-overlay.show{display:flex}
+.progress-card,.alert-card,.result-card{width:min(100%,390px);background:#fff;border-radius:21px;padding:26px 22px;text-align:center;box-shadow:0 20px 60px #17283b22}
+.spinner{width:38px;height:38px;border:4px solid #e5effb;border-top-color:#1678e8;border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-card h2,.result-card h2{font-size:19px;margin:0}.progress-card p,.result-card>p{font-size:13px;color:#8792a1;line-height:1.55}
+.progress-track{height:7px;background:#edf1f6;border-radius:9px;overflow:hidden;margin-top:20px}.progress-track div{height:100%;width:0;background:#1678e8;transition:width .25s}
+#percent{font-size:12px;color:#64748b;text-align:right;margin-top:6px}
+.steps{display:grid;gap:9px;text-align:left;margin-top:20px}.steps span{font-size:12px;color:#a0a8b4}.steps span.active{color:#1678e8;font-weight:800}.steps span.done{color:#1b9b55}
+.result-page{display:none;min-height:100vh;align-items:center;justify-content:center;padding:20px}.result-page.show{display:flex}
+.result-card{border:1px solid #e8edf2}.success{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#e9f9ef;color:#20a45a;font-size:30px;font-weight:800;margin:0 auto 15px}
+.device{background:#f6f8fa;border-radius:12px;padding:13px;text-align:left;margin-top:20px}.device small,.device strong{display:block}.device small{font-size:10px;color:#909aa7;font-weight:800}.device strong{font-size:12px;overflow-wrap:anywhere;margin-top:6px}
+.expiry{font-size:12px;color:#8a94a3}.expiry strong{color:#344054}.back{border:0;background:transparent;color:#66758a;font-size:12px;margin-top:15px;cursor:pointer}
+.alert-card h2{font-size:18px;margin:8px 0}.alert-card p{font-size:13px;color:#687487;line-height:1.55}.alert-icon{margin:auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#fff1ef;color:#d94841;font-weight:900;font-size:21px}.alert-card a,.alert-card button{display:block;width:100%;padding:13px;border-radius:11px;margin-top:10px;text-decoration:none;border:0;font-weight:750;font-size:13px}.alert-card a{background:#1678e8;color:#fff}.alert-card button{background:#f1f4f7;color:#526071}
+@media(max-width:380px){.sign-card{padding:24px 17px}h1{font-size:20px}}
