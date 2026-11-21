@@ -1,6 +1,6 @@
 {
-  "latestVersion": "2.2",
-  "title": "⚠️ THÔNG BÁO CẬP NHẬT QUAN TRỌNG",
-  "message": "VSA Library chính thức phát hành phiên bản 2.2.\n\n• Cập nhật máy chủ, khắc phục lỗi ký ứng dụng\n• Bổ sung tính năng khôi phục mật khẩu\n• Tối ưu tốc độ cài đặt và xử lý ứng dụng\n• Cải thiện hiệu năng, tăng độ ổn định hệ thống\n\n⚠️ BẮT BUỘC CẬP NHẬT phiên bản 2.2 để tiếp tục sử dụng VSA Library!",
-  "url": "https://vsign.download/vsa-library"
+"latestVersion": "2.2.1",
+"title": "THÔNG BÁO CẬP NHẬTI",
+"message": "VSA Library tiếp tục được nâng cấp với các cải tiến:\n\n• 📱 Mở rộng khả năng tương thích thiết bị từ iOS 15 đến iOS 27+\n• 🛠️ Khắc phục lỗi tải ứng dụng trên một số thiết bị\n• ⚡ Tối ưu máy chủ, cải thiện tốc độ tải và xử lý ứng dụng\n\nCập nhật ngay phiên bản 2.2.1 để có trải nghiệm ổn định và mượt mà hơn!",
+"url": "https://vsign.download/vsa-library"
 }
