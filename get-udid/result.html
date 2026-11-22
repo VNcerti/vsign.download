@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#eef4fb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="description" content="Thông tin thiết bị và mã UDID của bạn đã được trích xuất thành công.">
+
+    <title>Thông Tin Thiết Bị — VSign</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header điều hướng -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand-link" href="https://vsign.download">
+                <img
+                    class="header-logo"
+                    src="https://i.imgur.com/qGuaX3J.png"
+                    alt="VSign"
+                    onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+                >
+                <div id="logoFallback" class="header-logo-fallback">VS</div>
+                <span>VSign</span>
+            </a>
+
+            <nav class="header-nav">
+                <a href="https://vsign.download">Ký IPA</a>
+                <a href="index.html">Lấy lại</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="resultContainer">
+        <div class="container">
+
+            <div class="glass-card">
+
+                <!-- Thông báo khi chưa có dữ liệu thiết bị -->
+                <div id="noDataNotice" style="display: none; padding: 20px 10px;">
+                    <div style="font-size: 40px; margin-bottom: 12px;">📱</div>
+                    <h2 style="font-size: 20px; font-weight: 700; color: #1d1d1f; margin: 0 0 10px;">Chưa có thông tin thiết bị</h2>
+                    <p style="font-size: 14px; color: #6e6e73; line-height: 1.5; margin: 0 auto 24px; max-width: 440px;">
+                        Bạn chưa thực hiện tải và cài đặt cấu hình hoặc phiên lấy UDID đã hết hạn. Vui lòng bấm vào nút bên dưới để lấy UDID thiết bị của bạn.
+                    </p>
+                    <a class="btn-primary" href="index.html" style="max-width: 280px;">
+                        <span>LẤY UDID NGAY</span>
+                    </a>
+                </div>
+
+                <!-- Khu vực hiển thị thông tin thiết bị -->
+                <div id="dataContent" style="display: block;">
+
+                    <div class="badge-pill badge-success">
+                        <span class="dot"></span>
+                        Đã lấy thành công
+                    </div>
+
+                    <h1 class="page-title" style="margin-bottom: 8px;">
+                        Thông tin thiết bị
+                    </h1>
+
+                    <!-- Hướng dẫn chạm để sao chép đúng theo yêu cầu -->
+                    <div class="instruction-hint">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Để sao chép bất kỳ trường nào, hãy chạm vào trường đó</span>
+                    </div>
+
+                    <!-- Danh sách các trường thông tin thiết bị -->
+                    <div class="device-fields">
+
+                        <!-- TRƯỜNG UDID (Quan trọng nhất) -->
+                        <div id="cardUdid" class="field-card" data-copy="" data-label="UDID" title="Chạm để sao chép UDID">
+                            <div class="field-header">
+                                <span class="field-label">UDID :</span>
+                                <span class="copy-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Chạm để sao chép
+                                </span>
+                            </div>
+                            <div id="valUdid" class="field-value udid-text">
+                                00008130-001E11810182001C
+                            </div>
+                            <div class="field-subtext">Mã định danh duy nhất của iPhone / iPad</div>
+                        </div>
+
+                        <!-- TRƯỜNG SẢN PHẨM / PHIÊN BẢN (Ghi rõ tên ví dụ iPhone 15 Pro) -->
+                        <div id="cardProduct" class="field-card" data-copy="" data-label="Tên thiết bị" title="Chạm để sao chép Tên thiết bị">
+                            <div class="field-header">
+                                <span class="field-label">SẢN PHẨM / PHIÊN BẢN :</span>
+                                <span class="copy-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Chạm để sao chép
+                                </span>
+                            </div>
+                            <div id="valProduct" class="field-value" style="font-size: 19px; color: #1d1d1f; font-weight: 700;">
+                                iPhone 15 Pro
+                            </div>
+                            <div id="valSubProduct" class="field-subtext">
+                                Mã model: <strong>iPhone16,1</strong> · Hệ điều hành: <strong>iOS 18</strong>
+                            </div>
+                        </div>
+
+                        <!-- TRƯỜNG SỐ SERI (Nếu có) -->
+                        <div id="cardSerial" class="field-card" data-copy="" data-label="Số Seri" title="Chạm để sao chép Số Seri" style="display: none;">
+                            <div class="field-header">
+                                <span class="field-label">SỐ SERI (SERIAL NUMBER) :</span>
+                                <span class="copy-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Chạm để sao chép
+                                </span>
+                            </div>
+                            <div id="valSerial" class="field-value" style="font-family: monospace;">
+                                ---
+                            </div>
+                        </div>
+
+                        <!-- TRƯỜNG IMEI (Nếu có) -->
+                        <div id="cardImei" class="field-card" data-copy="" data-label="IMEI" title="Chạm để sao chép IMEI" style="display: none;">
+                            <div class="field-header">
+                                <span class="field-label">IMEI :</span>
+                                <span class="copy-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    Chạm để sao chép
+                                </span>
+                            </div>
+                            <div id="valImei" class="field-value" style="font-family: monospace;">
+                                ---
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Các nút hành động chính -->
+                    <div class="actions-group">
+                        <!-- Nút sao chép UDID nhanh -->
+                        <button id="copyUdidBtn" class="btn-primary" type="button" data-udid="">
+                            <span>Sao chép UDID</span>
+                        </button>
+
+                        <!-- Nút ký ngay với VSign (tự động chuyển hướng về trang chủ kèm UDID) -->
+                        <a id="signNowBtn" class="btn-secondary" href="https://vsign.download" style="background: rgba(10, 132, 255, 0.12); color: #0a84ff; border-color: rgba(10, 132, 255, 0.3);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"></path>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                            </svg>
+                            <span>Ký ứng dụng ngay với VSign</span>
+                        </a>
+
+                        <!-- Hàng nút phụ: Lấy lại & Chia sẻ -->
+                        <div style="display: flex; gap: 10px; width: 100%; max-width: 360px;">
+                            <a class="btn-secondary" href="index.html" style="flex: 1;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                    <path d="M3 21v-5h5"></path>
+                                </svg>
+                                <span>Lấy lại</span>
+                            </a>
+
+                            <button id="shareBtn" class="btn-secondary" type="button" style="flex: 1;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                <span>Chia sẻ</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Gợi ý bảo mật nhẹ nhàng -->
+                    <p style="margin: 28px 0 0; font-size: 13px; color: #8e8e93; line-height: 1.45;">
+                        💡 <em>Mẹo:</em> Sau khi lấy xong UDID, bạn có thể xóa hồ sơ cấu hình trong <strong>Cài đặt > VPN & Quản lý thiết bị</strong> trên iPhone/iPad nếu muốn.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2026 <a href="https://vsign.download">VSign</a> — Dịch vụ ký và quản lý IPA hàng đầu. Hỗ trợ hệ thống <a href="https://chungchip12.com" target="_blank" rel="noopener">CHUNGCHIP12</a>.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

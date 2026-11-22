@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#eef4fb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="description" content="Công cụ hỗ trợ lấy UDID iPhone/iPad trong vài giây không cần máy tính. An toàn, nhanh chóng và chuẩn xác cho VSign.">
+
+    <title>Lấy UDID iPhone / iPad — VSign</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header điều hướng -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand-link" href="https://vsign.download">
+                <img
+                    class="header-logo"
+                    src="https://i.imgur.com/qGuaX3J.png"
+                    alt="VSign"
+                    onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+                >
+                <div id="logoFallback" class="header-logo-fallback">VS</div>
+                <span>VSign</span>
+            </a>
+
+            <nav class="header-nav">
+                <a href="https://vsign.download">Ký IPA</a>
+                <a href="#huong-dan">Hướng dẫn</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- Cảnh báo nếu mở trong trình duyệt ứng dụng (Facebook, Zalo, TikTok...) -->
+            <div id="inAppBanner" class="notice-banner" style="display: none; background: #fff8e6; border-color: #ffd666; margin-bottom: 20px;">
+                <h4 style="color: #d48806;">⚠️ Vui lòng mở bằng trình duyệt Safari</h4>
+                <p>Apple yêu cầu sử dụng <strong>Safari</strong> để tải và cài đặt hồ sơ cấu hình UDID. Vui lòng bấm vào dấu <strong>...</strong> ở góc màn hình và chọn <strong>"Mở bằng Safari"</strong>.</p>
+            </div>
+
+            <!-- Card chính -->
+            <div class="glass-card">
+                <div class="badge-pill">
+                    <span class="dot"></span>
+                    Trực tiếp trên iPhone / iPad
+                </div>
+
+                <h1 class="page-title">
+                    Công cụ hỗ trợ lấy UDID iPhone/iPad của bạn trong vài giây
+                </h1>
+
+                <p class="page-desc">
+                    Không cần máy tính. Chỉ cần tải xuống một cấu hình nhanh, chúng tôi sẽ hiển thị ID thiết bị của bạn.
+                </p>
+
+                <!-- Nút bấm chính: LẤY UDID NGAY -->
+                <a id="enrollBtn" class="btn-primary" href="result.html">
+                    <span>LẤY UDID NGAY</span>
+                    <span class="btn-sub">(bấm vào sẽ tải cấu hình về máy)</span>
+                </a>
+
+                <!-- Mô tả minh họa nhỏ theo yêu cầu -->
+                <div class="features-mini">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Miễn phí
+                    </span>
+                    <span class="bullet">•</span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Không thu thập dữ liệu
+                    </span>
+                    <span class="bullet">•</span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Chỉ mất 30 giây
+                    </span>
+                </div>
+
+                <!-- Hướng dẫn 3 bước trực quan -->
+                <div id="huong-dan" class="steps-section">
+                    <div class="steps-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0a84ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        Các bước thực hiện đơn giản:
+                    </div>
+
+                    <ol class="steps-list">
+                        <li class="step-item">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <strong>Bấm "LẤY UDID NGAY" & Cho phép</strong>
+                                <p>Bấm nút màu xanh phía trên và chọn <em>"Cho phép"</em> khi Safari hiển thị thông báo tải cấu hình.</p>
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <strong>Vào Cài đặt & Cài đặt hồ sơ</strong>
+                                <p>Mở ứng dụng <strong>Cài đặt</strong> trên iPhone/iPad > bấm <strong>"Đã tải về hồ sơ"</strong> (hoặc Cài đặt chung > VPN & Quản lý thiết bị) > chọn <strong>Cài đặt</strong> ở góc phải trên.</p>
+                            </div>
+                        </li>
+                        <li class="step-item">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <strong>Tự động nhận UDID trên Safari</strong>
+                                <p>Hệ thống tự động chuyển lại trình duyệt Safari và hiển thị thông tin <strong>UDID</strong> cùng <strong>Tên thiết bị</strong> của bạn ngay lập tức.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Banner hỗ trợ người dùng xem trên máy tính PC/Mac -->
+                <div id="desktopBanner" class="notice-banner" style="display: none;">
+                    <h4>📱 Bạn đang mở trang này trên máy tính?</h4>
+                    <p>Hãy mở Camera trên iPhone hoặc iPad và quét mã QR này để truy cập trực tiếp bằng trình duyệt Safari:</p>
+                    <div id="desktopQrContainer" class="qr-box"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Overlay tự động chờ người dùng thao tác trong Settings -->
+    <div id="pollingOverlay" class="polling-overlay">
+        <div class="polling-card">
+            <div class="spinner"></div>
+            <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 700; color: #1d1d1f;">Đang chờ cài đặt hồ sơ...</h3>
+            <p style="margin: 0 0 20px; font-size: 14px; color: #6e6e73; line-height: 1.5;">
+                Vui lòng chuyển sang ứng dụng <strong>Cài đặt</strong> trên máy của bạn, chọn <strong>"Đã tải về hồ sơ"</strong> và bấm <strong>Cài đặt</strong>.<br><br>
+                Sau khi cài đặt xong, Safari sẽ tự động chuyển đến trang kết quả hiển thị UDID của bạn.
+            </p>
+            <button id="cancelPollBtn" class="btn-secondary" type="button">Hủy bỏ</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2026 <a href="https://vsign.download">VSign</a> — Dịch vụ ký và quản lý IPA hàng đầu. Hỗ trợ hệ thống <a href="https://chungchip12.com" target="_blank" rel="noopener">CHUNGCHIP12</a>.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
