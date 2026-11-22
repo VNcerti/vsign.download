@@ -9,14 +9,14 @@
     // ----------------------------------------------------
     // CẤU HÌNH API BACKEND
     // ----------------------------------------------------
-    // Khi bạn upload lên GitHub Pages (ví dụ myuser.github.io),
-    // API tự động trỏ về máy chủ backend chính thức: https://vsign.download
+    // Khi bạn upload lên GitHub Pages (domain vsign.download hoặc *.github.io),
+    // API backend xử lý logic Python tại máy chủ: https://api.vsign.download
     const API_BASE = (
         window.location.hostname === "localhost" ||
         window.location.hostname === "127.0.0.1"
     )
         ? window.location.origin
-        : (window.location.hostname.includes("vsign.download") ? "" : "https://vsign.download");
+        : "https://api.vsign.download";
 
     // ----------------------------------------------------
     // TOAST NOTIFICATION
